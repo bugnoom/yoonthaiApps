@@ -15,7 +15,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
+  data : any 
+  grid: Array<Array<string>>;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.data = {
+      title : " test1",
+      image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
+      except : "This is Except content"
+    },{
+      title : " test2",
+      image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
+      except : "This is Except content"
+    }
   }
 
   ionViewDidLoad() {
@@ -24,6 +36,24 @@ export class HomePage {
 
   getItems(ev: any) {
     console.log(ev);
+  }
+
+  showdata() {
+    this.grid = Array(Math.ceil(this.data.length / 2))
+    console.log(this.grid);
+    let rowNum = 0;
+    for (let i = 0; i < this.data.length; i += 2) {
+      this.grid[rowNum] = Array(2);
+
+      if (this.data[i]) {
+        this.grid[rowNum][0] = this.data[i]
+      }
+
+      if (this.data[i + 1]) {
+        this.grid[rowNum][1] = this.data[i + 1];
+      }
+      rowNum++;
+    }
   }
 
 }
