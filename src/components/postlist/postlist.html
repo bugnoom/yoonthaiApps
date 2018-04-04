@@ -1,8 +1,8 @@
 <!-- Generated template for the PostlistComponent component -->
-<ion-card #container>
+<ion-card #container style="display:table-cell;padding:10px;" >
     <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="data.image" [scrollObservable]="container.ionScroll" />
  
-  <ion-card-content>
+  <ion-card-content no-padding>
     <ion-card-title>
       {{data.title}}
     </ion-card-title>
@@ -10,7 +10,7 @@
       {{data.except}}
     </p>
   </ion-card-content>
-  <ion-row no-padding>
+  <!-- <ion-row no-padding>
     <ion-col>
       <button ion-button clear small color="danger" icon-start>
         <ion-icon name='star'></ion-icon>
@@ -29,6 +29,6 @@
         Share
       </button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
 </ion-card>

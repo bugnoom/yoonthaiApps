@@ -1,3 +1,4 @@
+import { StatusBar } from '@ionic-native/status-bar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -18,8 +19,12 @@ export class HomePage {
   data : any 
   grid: Array<Array<string>>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.data = {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar) {
+
+    this.statusBar.overlaysWebView(true);
+    this.statusBar.backgroundColorByHexString('#000000');
+
+    this.data = [{
       title : " test1",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
       except : "This is Except content"
@@ -27,11 +32,24 @@ export class HomePage {
       title : " test2",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
       except : "This is Except content"
-    }
+    },{
+      title : " test3",
+      image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
+      except : "This is Except content"
+    },{
+      title : " test4",
+      image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
+      except : "This is Except content"
+    }];
+    this.showdata();
   }
 
+  
+
   ionViewDidLoad() {
+   
     console.log('ionViewDidLoad HomePage');
+   
   }
 
   getItems(ev: any) {
