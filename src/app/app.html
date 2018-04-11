@@ -1,33 +1,31 @@
 <ion-menu [content]="content">
 
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      
-        <ion-content>
-          <ion-list>
-            <button menuClose ion-item>
-             Menu A
-            </button>
-            <button menuClose ion-item>
-                    Menu B
-                   </button>
-                   <button menuClose ion-item>
-                        Menu C
-                       </button>
-                       <button menuClose ion-item>
-                            Menu D
-                           </button>
-          </ion-list>
-        </ion-content>
-      
-      </ion-menu>
-      
-      <ion-nav id="nav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
-      
+  <ion-toolbar>
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+    <ion-list class="mainmenu">
+      <button menuClose ion-item>
+        Menu A
+      </button>
+      <button menuClose ion-item>
+        Menu B
+      </button>
+      <button menuClose ion-item>
+        Menu C
+      </button>
+      <button menuClose ion-item>
+        Menu D
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav id="nav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
 
 
 
 <!-- <ion-nav [root]="rootPage"></ion-nav> -->
-
-
