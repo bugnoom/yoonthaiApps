@@ -21,9 +21,6 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar) {
 
-    this.statusBar.overlaysWebView(true);
-    this.statusBar.backgroundColorByHexString('#000000');
-
     this.data = [{
       title : " test1",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
@@ -41,7 +38,8 @@ export class HomePage {
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
       except : "This is Except content"
     }];
-    this.showdata();
+
+    //this.showdata();
   }
 
   
