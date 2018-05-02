@@ -1,3 +1,4 @@
+import { Geolocation } from '@ionic-native/geolocation';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -18,8 +19,10 @@ export class HomePage {
 
   data : any 
   grid: Array<Array<string>>;
+  lat: any;
+  long : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar,private geolocation : Geolocation) {
 
     this.data = [{
       title : " test1",
@@ -38,6 +41,18 @@ export class HomePage {
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
       except : "This is Except content"
     }];
+
+    //get current position lat and long
+    this.geolocation.getCurrentPosition().then(
+      (resp => {
+        console.log(resp);
+        this.lat = resp.coords.latitude;
+        this.long = resp.coords.longitude;
+      })
+    ).catch(
+      (error) => {
+        console.log("location :",  error);
+      });
 
     //this.showdata();
   }

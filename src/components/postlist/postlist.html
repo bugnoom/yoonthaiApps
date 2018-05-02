@@ -2,32 +2,16 @@
 <ion-card #container style="display:table-cell;padding:10px;" >
     <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="data.image" [scrollObservable]="container.ionScroll" />
   <ion-card-content no-padding>
-    <ion-card-title>
-      {{data.title}}
-    </ion-card-title>
     <p text-wrap>
       {{data.except}}
     </p>
-  </ion-card-content>
-  <!-- <ion-row no-padding>
-    <ion-col>
-      <button ion-button clear small color="danger" icon-start>
-        <ion-icon name='star'></ion-icon>
-        Favorite
-      </button>
-    </ion-col>
-    <ion-col text-center>
-      <button ion-button clear small color="danger" icon-start>
-        <ion-icon name='musical-notes'></ion-icon>
-        Listen
-      </button>
-    </ion-col>
     <ion-col text-right>
-      <button ion-button clear small color="danger" icon-start>
-        <ion-icon name='share-alt'></ion-icon>
-        Share
-      </button>
-    </ion-col>
-  </ion-row> -->
+        <button ion-button clear small color="danger" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+  </ion-card-content>
+ 
 
 </ion-card>
