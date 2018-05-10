@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -9,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 
 import { MyApp } from './app.component';
+import { DbProvider } from '../providers/db/db';
 
 
 @NgModule({
@@ -16,6 +18,7 @@ import { MyApp } from './app.component';
     MyApp
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     IonicModule.forRoot(MyApp)
   ],
@@ -27,7 +30,8 @@ import { MyApp } from './app.component';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Geolocation
+    Geolocation,
+    DbProvider
   ]
 })
 export class AppModule {}

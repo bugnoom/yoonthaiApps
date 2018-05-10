@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -7,26 +8,31 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = 'TabsPage';
+  @ViewChild(Nav) nav : Nav;
 
-  constructor(platform: Platform, private statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
+  rootPage:any = 'HomePage';
+  logedin : boolean;
+
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+    this.initalApps();
+    this.logedin = false
+  }
+
+  initalApps(){
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
+      this.statusBar.styleDefault();
       this.statusBar.backgroundColorByHexString('#555555');
       
-      splashScreen.hide();
-
-    
-      
+      this.splashScreen.hide();
 
     });
   }
 
-  pages:any = [];
-    openPage(p){
-
+  openlogin(){
+    
+    this.nav.push('LoginPage');
   }
 
 

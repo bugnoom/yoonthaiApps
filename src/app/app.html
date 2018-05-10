@@ -4,8 +4,19 @@
     <ion-title>Menu</ion-title>
   </ion-toolbar>
 
-  <ion-content>
-    <ion-list class="mainmenu">
+  <ion-content class="mainmenu">
+      <ion-card text-center class="hide-card">
+          <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true" class="custom-avatar"/>
+          
+          <h2 *ngIf="logedin" >Username</h2>
+          <h2 *ngIf="!logedin" ><button ion-button menuClose (click)="openlogin()" >Login</button></h2>
+          
+          <hr>
+      </ion-card>
+    
+    
+    
+    <ion-list >
       <button menuClose ion-item>
         Menu A
       </button>

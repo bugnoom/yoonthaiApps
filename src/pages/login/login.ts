@@ -1,9 +1,8 @@
-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the TabsPage page.
+ * Generated class for the LoginPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,19 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-tabs',
-  templateUrl: 'tabs.html',
+  selector: 'page-login',
+  templateUrl: 'login.html',
 })
-export class TabsPage {
-
-  HomePageTabs = "HomePage";
-  ListPageTabs = "ListPage";
-  MapPageTabs = "MapPage";
-  SettingPageTabs = "SettingPage";
+export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage');
+  }
 
 }

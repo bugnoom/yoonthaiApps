@@ -1,19 +1,18 @@
-import { DbProvider } from './../../providers/db/db';
 import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { HomePage } from './home';
+import { LoginPage } from './login';
 
 @NgModule({
   declarations: [
-    HomePage,
+    LoginPage,
   ],
   imports: [
-    IonicPageModule.forChild(HomePage),
+    IonicPageModule.forChild(LoginPage),
     ComponentsModule
   ],
-  providers :[
-    DbProvider
+  exports:[
+    LoginPage
   ]
 })
-export class HomePageModule {}
+export class LoginPageModule {}

@@ -18,7 +18,6 @@ export class PostlistComponent {
   
 
   constructor() {
-    console.log('Hello PostlistComponent Component');
     console.log(this.data);
   }
 
