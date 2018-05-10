@@ -7,10 +7,16 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 
-
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MyApp } from './app.component';
 import { DbProvider } from '../providers/db/db';
+
+export function createTranslateLoader(http:HttpClient){
+  return new TranslateHttpLoader(http, './assets/i18n/','.json');
+}
+
 
 
 @NgModule({
@@ -20,7 +26,15 @@ import { DbProvider } from '../providers/db/db';
   imports: [
     HttpClientModule,
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    TranslateModule,
+    TranslateModule.forRoot({
+      loader : {
+        provide : TranslateLoader,
+        useFactory : (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,6 +46,7 @@ import { DbProvider } from '../providers/db/db';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
     DbProvider
+    
   ]
 })
 export class AppModule {}

@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Component } from '@angular/core';
@@ -22,7 +23,8 @@ export class HomePage {
   lat: any;
   long : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar,private geolocation : Geolocation) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar,private geolocation : Geolocation, public translate : TranslateService) {
 
     this.data = [{
       title : " test1",

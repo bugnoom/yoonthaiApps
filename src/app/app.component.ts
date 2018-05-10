@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +14,7 @@ export class MyApp {
   rootPage:any = 'HomePage';
   logedin : boolean;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate : TranslateService) {
     this.initalApps();
     this.logedin = false
   }
@@ -27,8 +28,16 @@ export class MyApp {
       
       this.splashScreen.hide();
 
+      this.initTranslate()
+
     });
   }
+
+  initTranslate() {
+    this.translate.addLangs(["en", "th", "ko"]);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+}
 
   openlogin(){
     
