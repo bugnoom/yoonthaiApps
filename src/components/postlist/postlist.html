@@ -1,17 +1,16 @@
 <!-- Generated template for the PostlistComponent component -->
-<ion-card #container style="display:table-cell;padding:10px;" >
-    <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="data.image" [scrollObservable]="container.ionScroll" />
-  <ion-card-content no-padding>
-    <p text-wrap>
-      {{data.except}}
-    </p>
-    <ion-col text-right>
-        <button ion-button clear small color="danger" icon-start>
-          <ion-icon name='share-alt'></ion-icon>
-          Share
-        </button>
-      </ion-col>
+<ion-card #container style="display:table-cell;padding:10px 3px;box-shadow: 0 0 0 0;" >
+  <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="data.image" [scrollObservable]="container.ionScroll" [offset]="500"
+    [scrollTarget]="container.scrollElement" (click)="opendetail(data.id)" />
+  <p class="title  item-text-wrap">{{data.title}}</p>
+  <ion-card-content style="white-space: pre-line;padding:0px 5px; overflow:hidden;text-overflow: ellipsis;min-height:6rem;max-height:6rem;">
+   {{data.except}}
   </ion-card-content>
- 
-
+  <ion-item>
+    <span item-left class="textdiff">{{dif}}</span>
+    <button ion-button icon-left clear item-end (click)="openmap(data.lat,data.lng);" >
+      <ion-icon name="navigate"></ion-icon>
+      Go!
+    </button>
+  </ion-item>
 </ion-card>

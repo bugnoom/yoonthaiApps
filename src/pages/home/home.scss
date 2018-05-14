@@ -3,6 +3,12 @@ page-home {
         height:15rem;
         border:1px solid #ccc;
     }
+    .rowheader{
+        width:100%;
+        height:auto;
+        background-color:map-get($colors, bgcolor );
+        color:map-get($colors, whitecolor );
+    }
 
 
 }

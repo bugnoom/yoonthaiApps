@@ -1,3 +1,4 @@
+
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +13,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MyApp } from './app.component';
 import { DbProvider } from '../providers/db/db';
+
+import {GoogleMaps} from '@ionic-native/google-maps';
+
+import { LaunchNavigator  } from '@ionic-native/launch-navigator';
+
+import { IonicStorageModule } from '@ionic/storage';
+
 
 export function createTranslateLoader(http:HttpClient){
   return new TranslateHttpLoader(http, './assets/i18n/','.json');
@@ -34,7 +42,8 @@ export function createTranslateLoader(http:HttpClient){
         useFactory : (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,7 +54,9 @@ export function createTranslateLoader(http:HttpClient){
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
-    DbProvider
+    DbProvider,
+    GoogleMaps,
+    LaunchNavigator,
     
   ]
 })

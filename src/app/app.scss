@@ -30,3 +30,7 @@
     margin-left: auto;
     margin-right: auto;
   }
+
+  .contentdark{
+    background-color:map-get($colors,darkblues )
+  }

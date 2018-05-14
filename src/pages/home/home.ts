@@ -1,8 +1,10 @@
+import { DbProvider } from './../../providers/db/db';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from  '@ionic/storage';
 
 /**
  * Generated class for the HomePage page.
@@ -20,51 +22,56 @@ export class HomePage {
 
   data : any 
   grid: Array<Array<string>>;
-  lat: any;
-  long : any;
+  clat: any;
+  clong : any;
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar,private geolocation : Geolocation, public translate : TranslateService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar,private geolocation : Geolocation, public translate : TranslateService, private db : DbProvider, private storage : Storage) {
 
     this.data = [{
-      title : " test1",
+      title : " test1test1test 1test1test1 test1t est1test1test1test1test1test1test1 test1test1",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
-      except : "This is Except content"
+      except : "This is Except content contentcontentcontent style=hite-space: pre-line;e=hite-space: pre-line;e=hite-space: pre-line;",
+      lat : 13.735679,
+      lng : 100.5768613,
     },{
-      title : " test2",
+      title : " test1test1test 1test1test1 test1t est1test1test1test1test1test1test1 test1test1",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
-      except : "This is Except content"
+      except : "This is Except content contentcontentcontent style=hite-space: pre-line;e=hite-space: pre-line;e=hite-space: pre-line;",
+      lat : 13.735679,
+      lng : 100.5768613,
     },{
-      title : " test3",
+      title : " test1test1test 1test1test1 test1t est1test1test1test1test1test1test1 test1test1",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
-      except : "This is Except content"
+      except : "This is Except content contentcontentcontent style=hite-space: pre-line;e=hite-space: pre-line;e=hite-space: pre-line;",
+      lat : 13.735679,
+      lng : 100.5768613,
     },{
-      title : " test4",
+      title : " test1test1test 1test1test1 test1t est1test1test1test1test1test1test1 test1test1",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
-      except : "This is Except content"
+      except : "This is Except content contentcontentcontent style=hite-space: pre-line;e=hite-space: pre-line;e=hite-space: pre-line;",
+      lat : 13.735679,
+      lng : 100.5768613,
     }];
 
-    //get current position lat and long
-    this.geolocation.getCurrentPosition().then(
-      (resp => {
-        console.log(resp);
-        this.lat = resp.coords.latitude;
-        this.long = resp.coords.longitude;
-      })
-    ).catch(
-      (error) => {
-        console.log("location :",  error);
-      });
-
+    this.getcurrentposition();
+    
     //this.showdata();
   }
 
+  getcurrentposition(){
+  this.storage.get('current_lat').then((val)=>{this.clat = val;console.log("lat from storage :",val)});
+  this.storage.get('current_lng').then((val)=>{this.clong = val;console.log("lng from storage :",val)});
   
+  }
 
   ionViewDidLoad() {
-   
+   this.getcurrentposition();
     console.log('ionViewDidLoad HomePage');
    
+  }
+
+  ionViewDidEnter(){
+  this.getcurrentposition();
   }
 
   getItems(ev: any) {
