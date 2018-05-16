@@ -1,7 +1,6 @@
 <!-- Generated template for the PostlistComponent component -->
-<ion-card #container style="display:table-cell;padding:10px 3px;box-shadow: 0 0 0 0;" >
-  <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="data.image" [scrollObservable]="container.ionScroll" [offset]="500"
-    [scrollTarget]="container.scrollElement" (click)="opendetail(data.id)" />
+<!-- <ion-card #container style="display:table-cell;padding:10px 3px;box-shadow: 0 0 0 0;" >
+  <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="data.image" [scrollObservable]="container.ionScroll" [offset]="500" [scrollTarget]="container.scrollElement" (click)="opendetail(data.id)" />
   <p class="title  item-text-wrap">{{data.title}}</p>
   <ion-card-content style="white-space: pre-line;padding:0px 5px; overflow:hidden;text-overflow: ellipsis;min-height:6rem;max-height:6rem;">
    {{data.except}}
@@ -13,4 +12,23 @@
       Go!
     </button>
   </ion-item>
+</ion-card>
+ -->
+
+ <ion-card #container>
+
+  <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="feature_image.source_url" [scrollObservable]="container.ionScroll" [offset]="500" [scrollTarget]="container.scrollElement" (click)="opendetail(data)" />
+  <ion-item>
+    <h2>{{data.title.rendered}}</h2>
+    <div [innerHtml]="data.excerpt.rendered"></div>
+  </ion-item>
+  
+  <ion-item>
+    <span item-left class="textdiff"><ion-spinner name="bubbles" *ngIf="!dif" ></ion-spinner>{{dif}}</span>
+    <button ion-button icon-left clear item-end (click)="openmap(data.lat,data.lng);">
+      <ion-icon name="navigate"></ion-icon>
+      Go!
+    </button>
+  </ion-item>
+
 </ion-card>

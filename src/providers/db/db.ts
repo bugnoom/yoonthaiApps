@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -17,7 +17,7 @@ export class DbProvider {
 
   userlogedin : boolean = false;
   baseURL: string = "http://www.yoonthai.com/";
-  url: string = this.baseURL + "mobileservices/services.php";//
+  url: string = this.baseURL + "webservices/services.php";//
  language: string;
  loading: any
 
@@ -26,30 +26,38 @@ export class DbProvider {
  
   constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService) {
     this.language = this.translate.currentLang;
-  }
-
-  showloading() {
     this.loading = this.loadingCtrl.create({
       content: "Loading ..."
     })
+  }
+
+  showloading() {
+    
     this.loading.present();
   }
 
   hideloading() {
     this.loading.dismiss();
   }
-  getCategories() {
-    var url = this.url + "?action=getCategory";
+  getParentCategories() {
+    var url = this.url + "?action=getAllParentCategories";
     return this.http.get(url)
-      //.do((res : Response) => console.log(res))
-      .map((res: Response) => res.json())
+      .do((res) => console.log(res))
+      .map((res) => res)
   }
 
-  getSlideBanner() {
-    var url = this.url + "?action=getSlideBanner";
+  getPostbyCategory(cate_id){
+    var url = this.url + "?action=getPostByCategories&cat="+cate_id;
     return this.http.get(url)
-      .do((res: Response) => console.log(res))
-      .map((res: Response) => res.json());
+      .do((res) => console.log(res))
+      .map((res) => res)
+  }
+
+  getmedia_picture(id){
+    var url = this.url + "?action=getmedia&id="+id;
+    return this.http.get(url)
+      .do((res) => console.log(res))
+      .map((res) => res)
   }
 
   // REF : https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/27943#27943

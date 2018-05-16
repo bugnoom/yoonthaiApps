@@ -15,6 +15,7 @@ export class MyApp {
 
   rootPage:any = 'HomePage';
   logedin : boolean;
+  categorylist : any = [];
 
   constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate : TranslateService,private geolocation : Geolocation, private db : DbProvider, private storage : Storage) {
     this.initalApps();
@@ -51,7 +52,9 @@ export class MyApp {
           this.storage.set('current_lng', data.coords.longitude);
           this.db.clat = data.coords.latitude;
           this.db.clng = data.coords.longitude;
-        })
+        });
+
+        this.getcategory();
 
     });
 
@@ -67,9 +70,20 @@ export class MyApp {
 }
 
   openlogin(){
-    
     this.nav.push('LoginPage');
   }
+
+getcategory(){
+  this.db.getParentCategories().subscribe(
+    data =>{this.categorylist = data;console.log(data);},
+    err => {console.log(err);},
+    () => {}
+  );
+}
+
+opencategory(id){
+  console.log("Category ID ",id)
+}
 
   
 

@@ -1,6 +1,5 @@
 import { DbProvider } from './../../providers/db/db';
 import { TranslateService } from '@ngx-translate/core';
-import { Geolocation } from '@ionic-native/geolocation';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -20,14 +19,16 @@ import { Storage } from  '@ionic/storage';
 })
 export class HomePage {
 
-  data : any 
-  grid: Array<Array<string>>;
-  clat: any;
-  clong : any;
+  data : any = [];
+  data_recomment : any =[];
+  category : any = [];
+  clat: any = 0;
+  clong : any = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar,private geolocation : Geolocation, public translate : TranslateService, private db : DbProvider, private storage : Storage) {
 
-    this.data = [{
+  constructor(public navCtrl: NavController, public navParams: NavParams, private statusBar : StatusBar, public translate : TranslateService, private db : DbProvider, private storage : Storage) {
+
+   /*  this.data = [{
       title : " test1test1test 1test1test1 test1t est1test1test1test1test1test1test1 test1test1",
       image : "https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true",
       except : "This is Except content contentcontentcontent style=hite-space: pre-line;e=hite-space: pre-line;e=hite-space: pre-line;",
@@ -51,49 +52,37 @@ export class HomePage {
       except : "This is Except content contentcontentcontent style=hite-space: pre-line;e=hite-space: pre-line;e=hite-space: pre-line;",
       lat : 13.735679,
       lng : 100.5768613,
-    }];
+    }]; */
 
-    this.getcurrentposition();
-    
-    //this.showdata();
+    this.db.getParentCategories().subscribe(
+      data => {this.category = data},
+      err => {console.log(err)},
+      () => {}
+    )
+
+    // id 132 is recommend category id
+    this.db.getPostbyCategory(132).subscribe(
+      data => {this.data_recomment = data},
+      err => {console.log("get Recommend",err)},
+      () => {}
+    )
+
   }
 
-  getcurrentposition(){
-  this.storage.get('current_lat').then((val)=>{this.clat = val;console.log("lat from storage :",val)});
-  this.storage.get('current_lng').then((val)=>{this.clong = val;console.log("lng from storage :",val)});
+  getpost(cate){
+    this.db.getPostbyCategory(cate).subscribe(
+      data => {this.data},
+      err =>{console.log("Err on post by category",err)},
+      () => {}
+    )
+  }
+  
+  ionViewDidLoad() {
   
   }
 
-  ionViewDidLoad() {
-   this.getcurrentposition();
-    console.log('ionViewDidLoad HomePage');
-   
-  }
-
   ionViewDidEnter(){
-  this.getcurrentposition();
-  }
-
-  getItems(ev: any) {
-    console.log(ev);
-  }
-
-  showdata() {
-    this.grid = Array(Math.ceil(this.data.length / 2))
-    console.log(this.grid);
-    let rowNum = 0;
-    for (let i = 0; i < this.data.length; i += 2) {
-      this.grid[rowNum] = Array(2);
-
-      if (this.data[i]) {
-        this.grid[rowNum][0] = this.data[i]
-      }
-
-      if (this.data[i + 1]) {
-        this.grid[rowNum][1] = this.data[i + 1];
-      }
-      rowNum++;
-    }
+    
   }
 
 }

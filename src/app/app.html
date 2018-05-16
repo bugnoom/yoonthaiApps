@@ -1,7 +1,7 @@
 <ion-menu [content]="content">
 
   <ion-toolbar color="darkblues">
-    <ion-title>Menu</ion-title>
+    
   </ion-toolbar>
 
   <ion-content class="mainmenu">
@@ -17,18 +17,10 @@
     
     
     <ion-list >
-      <button menuClose ion-item>
-        Menu A
+      <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" >
+        {{row.name}} <ion-badge item-end>{{row.count}}</ion-badge>
       </button>
-      <button menuClose ion-item>
-        Menu B
-      </button>
-      <button menuClose ion-item>
-        Menu C
-      </button>
-      <button menuClose ion-item>
-        Menu D
-      </button>
+      
     </ion-list>
   </ion-content>
 

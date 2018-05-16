@@ -1,9 +1,9 @@
 import { DbProvider } from './../../providers/db/db';
 import { NavController } from 'ionic-angular';
 import { Component, Input } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation';
-import { LaunchNavigator , LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Storage } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 /**
@@ -18,58 +18,68 @@ import { Storage } from '@ionic/storage';
 })
 export class PostlistComponent {
 
-  @Input('data') data : any;
-  @Input('curlat') curlat : any;
-  @Input('curlng') curlng : any;
-  
-  dif : any 
+  @Input('data') data: any;
+  @Input('curlat') curlat: number;
+  @Input('curlng') curlng: number;
+
+  dif: any
   //cur lat = 13.7246502
   //cur lng = 100.5843324
 
-  lat : any;
-  lng : any;
-
-  constructor(private navCtrl : NavController,private geolocation : Geolocation,  private launchnavigator : LaunchNavigator,private db : DbProvider,private storage : Storage) {
-    this.initFunction();
+  lat: any;
+  lng: any;
+  feature_image: any = [];
+  constructor(private navCtrl: NavController, private launchnavigator: LaunchNavigator, private db: DbProvider, private storage: Storage, private mylocation: Geolocation) {
+    //this.initFunction(this.data);
     //get current position lat and long
- //   this.dif = this.db.calculateDistance(this.cur_lat,this.data.lat,this.cur_lng,this.data.lng);
- 
+    //   this.dif = this.db.calculateDistance(this.cur_lat,this.data.lat,this.cur_lng,this.data.lng);
+    console.log("this is contructor", this.data, this.curlat, this.curlng)
   }
 
   ngOnInit() {
-    this.initFunction();
-   
+    this.db.hideloading();
+    let watch = this.mylocation.watchPosition();
+    watch.subscribe((data) => {
+      this.curlat = data.coords.latitude;
+      this.curlng = data.coords.longitude;
+      this.initFunction(this.data);
+    })
+
+    this.getimagefeature(this.data.featured_media);
+
   }
 
-  initFunction(){
-    this.storage.get('current_lat').then((val)=>{this.lat = val;console.log("lat from storage :",val)});
-    this.storage.get('current_lng').then((val)=>{this.lng = val;console.log("lng from storage :",val)});
-
-    console.log(this.data.lat,this.data.lng,this.lat,this.lng);
-    this.dif = this.db.getDistanceFromLatLonInKm(this.data.lat,this.data.lng,this.lat,this.lng).toFixed(2) + " km";
-    console.log("DIF : " + this.dif);
+  getimagefeature(id){
+    this.db.getmedia_picture(id).subscribe(
+      data =>{ this.feature_image = data},
+      err => { console.log("eerr",err)},
+      () =>{}
+    )
   }
 
-  opendetail(id){
-    this.navCtrl.push('DetailPage',{ids : id});
+  initFunction(data) {
+
+    this.dif = this.db.getDistanceFromLatLonInKm(data.latlong, data.longtitude, this.curlat, this.curlng).toFixed(2) + " km";
   }
 
-  openmap(lat,lng){
-   
-    let source : any = [this.lat, this.lng];
-
-    let options : LaunchNavigatorOptions = {
-      start : source
-   };
-   console.log(options);
-
-   let dest = [lat,lng]
-   this.launchnavigator.navigate(dest, options).then(
-     success => console.log("Luanched"),
-     error => console.log("error nav lunch")
-   )
+  opendetail(id) {
+    this.navCtrl.push('DetailPage', { ids: id });
   }
 
- 
+  openmap(lat, lng) {
+    this.db.showloading();
+    let source: any = [this.curlat, this.curlng];
+    let options: LaunchNavigatorOptions = {
+      start: source
+    };
+    console.log(options);
+    let dest = [lat, lng]
+    this.launchnavigator.navigate(dest, options).then(
+      success => { console.log("Luanched"); this.db.showloading() },
+      error => { console.log("error nav lunch"); this.db.hideloading() }
+    )
+  }
+
+
 
 }
