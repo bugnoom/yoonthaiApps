@@ -1,3 +1,4 @@
+
 import { DbProvider } from './../../providers/db/db';
 import { TranslateService } from '@ngx-translate/core';
 import { Component } from '@angular/core';
@@ -43,6 +44,10 @@ export class HomePage {
    
   }
 
+  opencategory(id){
+    this.navCtrl.push('CategoryPage',{ids:id});
+  }
+
   ionViewDidEnter() {
     let watch = this.mylocation.watchPosition();
     watch.subscribe((data) => {
@@ -72,6 +77,15 @@ export class HomePage {
     this.db.getdatainhomepage().then(
       alldata => {
         this.category = alldata;
+        for(let i = 0; i< this.category.length; i++){
+          for(let a = 0; a<this.category[i].data.length; a++){
+             this.getimagefeature(alldata[i].data[a].featured_media,alldata[i].data[a].id);
+          console.log('data',alldata[i].data[a]);
+          }
+        
+        }
+       
+        
         this.db.hideloading();
       }
     )
@@ -101,27 +115,17 @@ export class HomePage {
     this.navCtrl.push('DetailPage', { ids: id });
   }
 
-
-
   getimagefeature(feature_id,post_id){
     this.db.getmedia_picture(feature_id).then(
-      datas =>{ 
+      datas =>{ this.imgfeature = datas;
               if(!datas){
                   this.feature_image[post_id] = "";
               }else{
-                    this.feature_image[post_id] = datas;
+                    this.feature_image[post_id] = this.imgfeature.source_url;
                     console.log(datas);
               }
     },
       err => { console.log("eerr",err)},
-    )
-  }
-
-  getfeatureimg(feature_id){
-    this.db.getmedia_picture(feature_id).then(
-      data => {
-        return this.imgfeature = data
-      }
     )
   }
 

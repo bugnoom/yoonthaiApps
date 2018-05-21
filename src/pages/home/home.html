@@ -30,18 +30,18 @@
   </ion-slides>
 <hr />
   <ion-row>
-      <ion-row class="rowheader" padding>
-          <ion-col col-6>Recommend </ion-col>
-          <ion-col col-6 text-right>View All</ion-col>
+      <ion-row class="rowheader">
+          <ion-col col-6 style="padding-top:16px;">Recommend </ion-col>
+          <ion-col col-6 text-right><button ion-button small color="light" clear (click)="opencategory(132)">View All</button></ion-col>
       </ion-row>
-    <ion-scroll scrollX="true"  style="width:100%;min-height:30rem;display:block;white-space: nowrap"   >
+    <ion-scroll scrollX="true"  class="scrollElement"   >
     <ion-col col-8 *ngFor="let row of data_recomment" class="coldata" >
       <ion-card #container > 
-        <img class="featureimage" [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="this.feature_image[row.id]" [scrollObservable]="container.ionScroll" [offset]="1000" [scrollTarget]="container.scrollElement" (click)="opendetail(data)" />
+        <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="this.feature_image[row.id]" [scrollObservable]="container.ionScroll" [offset]="1000" [scrollTarget]="container.scrollElement" (click)="opendetail(data)" />
       <!--  <img src="{{feature_image.source_url}}" (click)="opendetail(data)" /> -->
         <ion-item>
           <h2>{{row.title.rendered}}</h2>
-          <div [innerHtml]="row.excerpt.rendered"></div>
+          <small [innerHtml]="row.excerpt.rendered"></small>
         </ion-item>
         
         <ion-item>
@@ -58,18 +58,18 @@
   </ion-row>
 
   <ion-row *ngFor="let caterow of category"> 
-    <ion-row class="rowheader" padding>
-        <ion-col col-6><div [innerHTML]="caterow.name"></div> </ion-col>
-        <ion-col col-6 text-right>View All</ion-col>
+    <ion-row class="rowheader">
+        <ion-col col-6 style="padding-top:16px;"><div [innerHTML]="caterow.name"></div> </ion-col>
+        <ion-col col-6 text-right><button ion-button color="light" small clear (click)="opencategory(caterow.id)">View All</button></ion-col>
     </ion-row>
-    <ion-scroll scrollX="true" style="width:100%;height:30rem;display:block;white-space: nowrap" >
+    <ion-scroll scrollX="true" class="scrollElement" >
     <ion-col col-8 *ngFor="let row of caterow.data" class="coldata" >
       <ion-card #container1> 
-       <!--  <img class="featureimage" [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="this.feature_image[row.id]" [scrollObservable]="container1.ionScroll" [offset]="1000" [scrollTarget]="container1.scrollElement" (click)="opendetail(data)" /> -->
-        <img src="/assets/imgs/no-image.jpg" />
+        <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="this.feature_image[row.id]" [scrollObservable]="container1.ionScroll" [offset]="1000" [scrollTarget]="container1.scrollElement" (click)="opendetail(data)" />
         <ion-item>
           <h2>{{row.title.rendered}}</h2>
-          <div [innerHtml]="row.excerpt.rendered"></div>
+          <small [innerHtml]="row.excerpt.rendered"></small>
+          
         </ion-item>
       
         <ion-item>
