@@ -15,9 +15,10 @@
 </ion-card>
  -->
 
- <ion-card #container>
+ <ion-card #container> 
 
-  <img [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="feature_image.source_url" [scrollObservable]="container.ionScroll" [offset]="500" [scrollTarget]="container.scrollElement" (click)="opendetail(data)" />
+  <img class="featureimage" [defaultImage]="'/assets/imgs/no-image.jpg'" [lazyLoad]="feature_image.source_url" [scrollObservable]="container.ionScroll" [offset]="500" [scrollTarget]="container.scrollElement" (click)="opendetail(data)" />
+<!--  <img src="{{feature_image.source_url}}" (click)="opendetail(data)" /> -->
   <ion-item>
     <h2>{{data.title.rendered}}</h2>
     <div [innerHtml]="data.excerpt.rendered"></div>

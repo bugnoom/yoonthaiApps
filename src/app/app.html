@@ -14,13 +14,10 @@
           <hr>
       </ion-card>
     
-    
-    
     <ion-list >
       <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" >
         {{row.name}} <ion-badge item-end>{{row.count}}</ion-badge>
       </button>
-      
     </ion-list>
   </ion-content>
 

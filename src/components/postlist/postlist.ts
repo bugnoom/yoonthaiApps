@@ -21,45 +21,55 @@ export class PostlistComponent {
   @Input('data') data: any;
   @Input('curlat') curlat: number;
   @Input('curlng') curlng: number;
+  @Input('featureImg') featureImg: any;
 
   dif: any
   //cur lat = 13.7246502
   //cur lng = 100.5843324
 
-  lat: any;
-  lng: any;
+  
   feature_image: any = [];
   constructor(private navCtrl: NavController, private launchnavigator: LaunchNavigator, private db: DbProvider, private storage: Storage, private mylocation: Geolocation) {
     //this.initFunction(this.data);
     //get current position lat and long
     //   this.dif = this.db.calculateDistance(this.cur_lat,this.data.lat,this.cur_lng,this.data.lng);
-    console.log("this is contructor", this.data, this.curlat, this.curlng)
+    //console.log("this is contructor", this.featureImg)
   }
 
   ngOnInit() {
-    this.db.hideloading();
+  
     let watch = this.mylocation.watchPosition();
     watch.subscribe((data) => {
       this.curlat = data.coords.latitude;
       this.curlng = data.coords.longitude;
       this.initFunction(this.data);
-    })
+    });
 
-    this.getimagefeature(this.data.featured_media);
+    //console.log('imgae',this.featureImg);
+    this.getimagefeature(this.data.featured_media)
+    
 
   }
 
   getimagefeature(id){
-    this.db.getmedia_picture(id).subscribe(
-      data =>{ this.feature_image = data},
+    if(id != 'undefined'){
+    console.log("data id",id);
+    this.db.getmedia_picture(id).then(
+      data =>{ if(!data){
+              console.log('can not get image');
+              }else{
+                this.feature_image = data; 
+                console.log("feature image",data,id)
+              }
+    },
       err => { console.log("eerr",err)},
-      () =>{}
     )
+  }
   }
 
   initFunction(data) {
-
     this.dif = this.db.getDistanceFromLatLonInKm(data.latlong, data.longtitude, this.curlat, this.curlng).toFixed(2) + " km";
+    //this.getimagefeature(data.featured_media);
   }
 
   opendetail(id) {

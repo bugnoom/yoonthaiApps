@@ -54,12 +54,12 @@ export class MyApp {
           this.db.clng = data.coords.longitude;
         });
 
-        this.getcategory();
+      
 
     });
 
   
-
+      this.getcategory();
 
   }
 
@@ -74,10 +74,9 @@ export class MyApp {
   }
 
 getcategory(){
-  this.db.getParentCategories().subscribe(
+  this.db.getParentCategories().then(
     data =>{this.categorylist = data;console.log(data);},
-    err => {console.log(err);},
-    () => {}
+    err => {console.log(err);}
   );
 }
 

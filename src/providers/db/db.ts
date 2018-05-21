@@ -18,6 +18,8 @@ export class DbProvider {
   userlogedin : boolean = false;
   baseURL: string = "http://www.yoonthai.com/";
   url: string = this.baseURL + "webservices/services.php";//
+ /*  baseURL: string = "http://192.168.1.52/yoonthai/";
+  url : string = this.baseURL + "mobileservices/services.php"; */
  language: string;
  loading: any
 
@@ -26,38 +28,64 @@ export class DbProvider {
  
   constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService) {
     this.language = this.translate.currentLang;
-    this.loading = this.loadingCtrl.create({
-      content: "Loading ..."
-    })
+   
   }
 
   showloading() {
-    
+    this.loading = this.loadingCtrl.create({
+      content: "Loading ..."
+    })
     this.loading.present();
   }
 
   hideloading() {
     this.loading.dismiss();
   }
-  getParentCategories() {
-    var url = this.url + "?action=getAllParentCategories";
-    return this.http.get(url)
-      .do((res) => console.log(res))
-      .map((res) => res)
+
+  getdatainhomepage(l=''){
+    var url = this.url+"?action=getPostFirstPage&l="+l;
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err=>{
+        console.log(err);
+      });
+    });
   }
 
-  getPostbyCategory(cate_id){
-    var url = this.url + "?action=getPostByCategories&cat="+cate_id;
-    return this.http.get(url)
-      .do((res) => console.log(res))
-      .map((res) => res)
+  getParentCategories() {
+    var url = this.url + "?action=getAllParentCategories";
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        console.log(err);
+      });
+    });
+  }
+
+  getPostbyCategory(cate_id,limit){
+    if(cate_id == 'undefined'){ return; }
+    let url = this.url + "?action=getPostByCategories&cat="+cate_id+"&per_page="+limit;
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        console.log(err);
+      });
+    });
   }
 
   getmedia_picture(id){
+    if(id == 'undefined'){ return; }
     var url = this.url + "?action=getmedia&id="+id;
-    return this.http.get(url)
-      .do((res) => console.log(res))
-      .map((res) => res)
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        console.log(err);
+      });
+    });
   }
 
   // REF : https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/27943#27943
