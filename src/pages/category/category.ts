@@ -22,10 +22,7 @@ export class CategoryPage {
 
   page :number = 1;
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider,private mylocation : Geolocation,private launchnavigator: LaunchNavigator) {
-    this.watchlocation();
-    this.cate_id = this.navParams.get('ids');
-    this.getcatename();
-    this.showdata();
+    
   }
 
   ionViewDidLoad() {
@@ -34,16 +31,6 @@ export class CategoryPage {
     this.getcatename();
     this.showdata();
   }
-
-  ionViewDidEnter() {
-    this.watchlocation();
-  }
-
-ngOnInit(): void {
-  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-  //Add 'implements OnInit' to the class.
-  this.watchlocation();
-}
 
 watchlocation(){
   let watch = this.mylocation.watchPosition();

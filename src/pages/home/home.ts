@@ -28,6 +28,7 @@ export class HomePage {
   curlng: any = 0;
   diff : string = '0';
   imgfeature : any = {};
+  page : number = 1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public translate: TranslateService, private db: DbProvider, private mylocation : Geolocation,private launchnavigator: LaunchNavigator) {
   
@@ -57,9 +58,8 @@ export class HomePage {
     });
 
   }
-
   load_recomment(){
-    this.db.getPostbyCategory(132,5).then(
+    this.db.getPostbyCategory(132,this.page).then(
       data => { this.data_recomment = data; 
              for(let i = 0; i < this.data_recomment.length; i++){
                this.getimagefeature(this.data_recomment[i].featured_media,this.data_recomment[i].id);
@@ -80,7 +80,7 @@ export class HomePage {
         for(let i = 0; i< this.category.length; i++){
           for(let a = 0; a<this.category[i].data.length; a++){
              this.getimagefeature(alldata[i].data[a].featured_media,alldata[i].data[a].id);
-          console.log('data',alldata[i].data[a]);
+         // console.log('data',alldata[i].data[a]);
           }
         
         }
@@ -99,7 +99,7 @@ export class HomePage {
     let options: LaunchNavigatorOptions = {
       start: source
     };
-    console.log(options);
+   // console.log(options);
     let dest = [destlat, destlng]
     this.launchnavigator.navigate(dest, options).then(
       success => { console.log("Luanched"); this.db.hideloading() },
@@ -108,7 +108,7 @@ export class HomePage {
   }
   
   getdistanct(destlat,destlng){
-    return this.diff = this.db.getDistanceFromLatLonInKm(this.curlat,this.curlng,destlat,destlng).toFixed(2) + "km";
+    //return this.diff = this.db.getDistanceFromLatLonInKm(this.curlat,this.curlng,destlat,destlng).toFixed(2) + "km";
   }
 
   opendetail(id) {
@@ -122,7 +122,7 @@ export class HomePage {
                   this.feature_image[post_id] = "";
               }else{
                     this.feature_image[post_id] = this.imgfeature.source_url;
-                    console.log(datas);
+                   // console.log(datas);
               }
     },
       err => { console.log("eerr",err)},

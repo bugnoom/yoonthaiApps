@@ -16,14 +16,14 @@
   <ion-card *ngFor="let row of cate_list" class="cardoption" >
     <ion-item class="cardheaditem">
       <h2>{{row.title.rendered}}</h2>
-      <p><ion-icon name="clock"></ion-icon> {{opendatetime(row)}}</p>
+     
     </ion-item>
     <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_image[row.id]"  (click)="opendetail(row)" [scrollObservable]="container.ionScroll" [offset]="1000" />
     <ion-card-content>
       <p [innerHtml]="row.excerpt.rendered"></p>
     </ion-card-content>
     <ion-item>
-      <span item-left class="textdiff"><ion-spinner name="bubbles" *ngIf="!diff" ></ion-spinner>{{getdistanct(row.latlong,row.longtitude)}}</span>
+      <p item-left class="textdiff"><ion-icon name="clock"></ion-icon> {{opendatetime(row)}}</p>
       <button ion-button icon-left clear item-end (click)="openmap(row.latlong,row.longtitude);">
         <ion-icon name="navigate"></ion-icon>
         Go!
