@@ -1,3 +1,19 @@
 page-category {
+    .cardoption{
+        position: relative;
+    }
+    .cardheaditem{
+        position: absolute;
+        top:30%;
+        background-color:rgba(0,0,0,0.5);
+        padding:10px;
+    }
 
+    .cardheaditem h2{font-size:110%;font-weight: bold;}
+    .cardheaditem h2, .cardheaditem p{
+        color:#fff;
+    }
+    .cardheaditem p .icon{
+        color: map-get($colors, yellowcolor );
+    }
 }

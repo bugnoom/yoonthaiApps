@@ -102,7 +102,7 @@ export class HomePage {
     console.log(options);
     let dest = [destlat, destlng]
     this.launchnavigator.navigate(dest, options).then(
-      success => { console.log("Luanched"); this.db.showloading() },
+      success => { console.log("Luanched"); this.db.hideloading() },
       error => { console.log("error nav lunch"); this.db.hideloading() }
     )
   }

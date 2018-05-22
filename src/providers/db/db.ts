@@ -25,6 +25,8 @@ export class DbProvider {
 
  clat : any;
  clng : any;
+
+ feature_image: any = [];
  
   constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService) {
     this.language = this.translate.currentLang;
@@ -40,6 +42,17 @@ export class DbProvider {
 
   hideloading() {
     this.loading.dismiss();
+  }
+
+  getcatedetail(id){
+    var url = this.url+"?action=getCategoryById&id="+id;
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(
+        data => { resolve(data)
+        }, err => {
+          console.log(err);
+        });
+    });
   }
 
   getdatainhomepage(l=''){
@@ -64,9 +77,9 @@ export class DbProvider {
     });
   }
 
-  getPostbyCategory(cate_id,limit){
+  getPostbyCategory(cate_id,page){
     if(cate_id == 'undefined'){ return; }
-    let url = this.url + "?action=getPostByCategories&cat="+cate_id+"&per_page="+limit;
+    let url = this.url + "?action=getPostByCategories&cat="+cate_id+"&page="+page;
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
         resolve(data);
@@ -106,4 +119,7 @@ export class DbProvider {
     return deg * (Math.PI/180)
   }
   
+
+  
+
 }

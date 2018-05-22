@@ -34,3 +34,8 @@
   .contentdark{
     background-color:map-get($colors,darkblues )
   }
+  
+  .textdiff{
+    font-size:60%;
+    color:map-get($colors, redcolor );
+  }
