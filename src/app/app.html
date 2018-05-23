@@ -1,6 +1,6 @@
 <ion-menu [content]="content">
 
-  <ion-toolbar color="darkblues">
+  <ion-toolbar color="bgcolor">
     
   </ion-toolbar>
 
@@ -11,12 +11,14 @@
           <h2 *ngIf="logedin" >Username</h2>
           <h2 *ngIf="!logedin" ><button ion-button menuClose (click)="openlogin()" >Login</button></h2>
           
-          <hr>
       </ion-card>
     
-    <ion-list >
+    <ion-list style="padding-bottom:5rem;">
+        <button menuClose ion-item (click)="opensetting()"  >
+            <span>{{'setting' | translate}}</span>
+          </button>
       <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" >
-        {{row.name}} <ion-badge item-end>{{row.count}}</ion-badge>
+        <span [innerHtml] = "row.name"></span><ion-badge item-end>{{row.count}}</ion-badge>
       </button>
     </ion-list>
   </ion-content>

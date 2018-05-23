@@ -4,9 +4,14 @@ page-category {
     }
     .cardheaditem{
         position: absolute;
-        top:30%;
+        top:37%;
         background-color:rgba(0,0,0,0.5);
-        padding:10px;
+        padding:6px;
+    }
+
+    .cardheaditem.item.item-ios{
+        top:36%;
+        padding:11px;
     }
 
     .cardheaditem h2{font-size:110%;font-weight: bold;}

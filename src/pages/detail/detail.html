@@ -6,13 +6,34 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>detail</ion-title>
+  <ion-navbar color="bgcolor">
+    <ion-title [innerHtml]="data.title" class="headertitle"></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content class="contentdark" #container>
+  <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll"
+  />
+  <ion-row>
+    <ion-col style="background-color:#555;color:#fff;">
+      <ion-row>
+        <ion-col>
+          <ion-title style="color:#fff;">{{data.title}}</ion-title>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-icon name="clock"></ion-icon>{{opendatetime(detaildata)}}
+        </ion-col>
+        <ion-col><p item-right>
+          <button ion-button icon-left clear small item-end>
+            <ion-icon name="call"></ion-icon>
+            Call me
+          </button></p>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 </ion-content>

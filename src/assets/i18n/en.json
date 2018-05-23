@@ -1,4 +1,7 @@
 {
-    "home": "Home"
+    "home": "Home",
+    "setting" : "Setting",
+    "txt_lang" : "Language",
+    "viewall" : "View All"
 
 }

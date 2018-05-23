@@ -6,8 +6,14 @@ page-home {
     .rowheader{
         width:100%;
         height:auto;
-        background-color:map-get($colors, bgcolor );
+       /*  background-color:map-get($colors, bgcolor ); */
         color:map-get($colors, whitecolor );
+    }
+
+    .title{
+        padding-top:12px;
+        padding-left:15px;
+        font-size:110%
     }
 
     .coldata{
@@ -20,12 +26,13 @@ page-home {
         width:100%;height:45vh;
         max-height:100vh;
         display:block;
-        white-space: nowrap
+        white-space: nowrap;
+        border-bottom: 1px inset #555555;
       }
 
       @media  screen and (max-width:768) {
         .scrollElement{
-            width:100%;height:45rem;
+            width:100%;height:45vh;
       }
     }
 

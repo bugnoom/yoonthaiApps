@@ -43,7 +43,7 @@ watchlocation(){
 
   showdata(){
     this.db.showloading();
-    this.db.getPostbyCategory(this.cate_id,this.page).then(data=>{
+    this.db.getPostbyCategory(this.cate_id,this.page,this.db.language).then(data=>{
       this.cate_list = data;
       for(let i = 0; i < this.cate_list.length; i++){
         this.feature_image[this.cate_list[i].id] = this.getimagefeature(this.cate_list[i].featured_media, this.cate_list[i].id);

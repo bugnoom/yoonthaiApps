@@ -1,3 +1,4 @@
+import { I18nSwitcherProvider } from './../i18n-switcher/i18n-switcher';
 import { HttpClient,HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
@@ -28,9 +29,8 @@ export class DbProvider {
 
  feature_image: any = [];
  
-  constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService) {
-    this.language = this.translate.currentLang;
-   
+  constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService, private i18n : I18nSwitcherProvider) {
+     
   }
 
   showloading() {
@@ -45,7 +45,7 @@ export class DbProvider {
   }
 
   getcatedetail(id){
-    var url = this.url+"?action=getCategoryById&id="+id;
+    var url = this.url+"?action=getCategoryById&id="+id+"&language="+this.language;
     return new Promise(resolve =>{
       this.http.get(url).subscribe(
         data => { resolve(data)
@@ -55,8 +55,10 @@ export class DbProvider {
     });
   }
 
-  getdatainhomepage(l=''){
-    var url = this.url+"?action=getPostFirstPage&l="+l;
+  getdatainhomepage(lang){
+    let l = 'ko';
+    var url = this.url+"?action=getPostFirstPage&l="+l+"&language="+lang;
+    console.log("is url is ",url);
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
         resolve(data);
@@ -66,8 +68,8 @@ export class DbProvider {
     });
   }
 
-  getParentCategories() {
-    var url = this.url + "?action=getAllParentCategories";
+  getParentCategories(lang) {
+    var url = this.url + "?action=getAllParentCategories&language="+lang;
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
         resolve(data);
@@ -77,9 +79,9 @@ export class DbProvider {
     });
   }
 
-  getPostbyCategory(cate_id,page){
+  getPostbyCategory(cate_id,page,lang){
     if(cate_id == 'undefined'){ return; }
-    let url = this.url + "?action=getPostByCategories&cat="+cate_id+"&page="+page;
+    let url = this.url + "?action=getPostByCategories&cat="+cate_id+"&page="+page+"&language="+lang;
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
         resolve(data);
@@ -91,11 +93,14 @@ export class DbProvider {
 
   getmedia_picture(id){
     if(id == 'undefined'){ return; }
-    var url = this.url + "?action=getmedia&id="+id;
+    let l = (this.language == "undefined")? "" : ""+this.language;
+   var url = this.baseURL+"/wp-json/wp/v2/media/"+id
+    //var url = this.url + "?action=getmedia&id="+id;
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
         resolve(data);
       }, err =>{
+        resolve()
         console.log(err);
       });
     });

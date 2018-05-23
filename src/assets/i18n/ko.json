@@ -1,3 +1,6 @@
 {
-    "home": "Home KO"
+    "home": "Home KO",
+    "setting" : "환경",
+    "txt_lang" : "언어",
+    "viewall" : "전체보기"
 }
