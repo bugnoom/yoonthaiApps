@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 
+
 @NgModule({
   declarations: [
     HomePage,

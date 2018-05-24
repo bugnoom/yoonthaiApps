@@ -40,7 +40,7 @@
     "cordova-plugin-dialogs": "^2.0.1",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-globalization": "^1.11.0",
-    "cordova-plugin-googlemaps": "^2.3.3",
+    "cordova-plugin-googlemaps": "^2.3.4",
     "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git#2.6.0",
     "cordova-plugin-ionic-keyboard": "^2.1.0",
     "cordova-plugin-ionic-webview": "^1.2.1",
@@ -80,6 +80,8 @@
       },
       "cordova-sqlite-storage": {},
       "cordova-plugin-nativestorage": {},
+      "cordova-plugin-globalization": {},
+      "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "apikey",
         "API_KEY_FOR_IOS": "apikey",
@@ -87,9 +89,7 @@
         "ANDROID_SUPPORT_V4_VERSION": "24.1.0",
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
-      },
-      "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-globalization": {}
+      }
     },
     "platforms": [
       "android",

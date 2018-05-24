@@ -87,7 +87,7 @@ watchlocation(){
   }
 
   openmap(destlat, destlng) {
-    this.db.showloading();
+   
     let source: any = [this.curlat, this.curlng];
     let options: LaunchNavigatorOptions = {
       start: source

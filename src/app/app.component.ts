@@ -34,9 +34,9 @@ export class MyApp {
     this.getcategory();
     this.logedin = false
 
-    this.translate.onLangChange.subscribe((event: LangChangeEvent)=>{
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.db.getParentCategories(this.db.language).then(
-        data => { this.categorylist = data;console.log('cate data',data)},
+        data => { this.categorylist = data; console.log('cate data', data) },
         err => { console.log(err); }
       );
     })
@@ -72,24 +72,34 @@ export class MyApp {
         this.db.clat = data.coords.latitude;
         this.db.clng = data.coords.longitude;
       });
-
-
-
     });
-
-  
 
   }
 
   initTranslate() {
-    this.globlization.getPreferredLanguage()
-      .then((mylang) => {
-        this.db.language = mylang.value
-        this.translate.setDefaultLang(mylang.value);
-        this.translate.use(mylang.value);
-        this.I18nSwitcherProvider.switchLang(mylang.value);
-      })
-      .catch(e => console.log('mylang error', e))
+    let userLang = "";
+    this.storage.get('mylang').then(
+      (data) => {
+        this.db.language = data
+        this.translate.setDefaultLang(data);
+        this.translate.use(data);
+        this.I18nSwitcherProvider.switchLang(data);
+      },
+      err => {
+        userLang = navigator.language.split('-')[0];
+        userLang = /(th|ko)/gi.test(userLang) ? userLang : 'th';
+        this.storage.set('mylang', userLang);
+        this.db.language = userLang
+        this.translate.setDefaultLang(userLang);
+        this.translate.use(userLang);
+        this.I18nSwitcherProvider.switchLang(userLang);
+      }
+    )
+
+    console.log("userlang ", this.db.language);
+
+
+
 
     /* this.translate.addLangs(["en", "th", "ko"]);*/
 
@@ -111,17 +121,17 @@ export class MyApp {
 
   getcategory() {
     this.db.getParentCategories(this.db.language).then(
-      data => { this.categorylist = data;console.log('cate data',data)},
+      data => { this.categorylist = data; console.log('cate data', data) },
       err => { console.log(err); }
     );
-    
+
   }
 
   opencategory(id) {
     this.nav.push('CategoryPage', { ids: id });
   }
 
-  opensetting(){
+  opensetting() {
     this.nav.push('SettingPage');
   }
 

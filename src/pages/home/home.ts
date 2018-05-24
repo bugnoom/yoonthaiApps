@@ -1,3 +1,4 @@
+import { Globalization } from '@ionic-native/globalization';
 import { I18nSwitcherProvider } from './../../providers/i18n-switcher/i18n-switcher';
 
 import { DbProvider } from './../../providers/db/db';
@@ -5,7 +6,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
-
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the HomePage page.
@@ -31,18 +32,23 @@ export class HomePage {
   imgfeature: any = {};
   page: number = 1;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider) {
+  mylang: string;
 
-    this.load_recomment();
-    this.load_data();
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage) {
+    
   }
-
 
   ionViewDidLoad() {
     /*  this.load_recomment();
      this.load_data(); */
-
+     this.storage.get('mylang').then(
+      (data) => {
+        this.db.language = data;
+        this.load_recomment();
+        this.load_data();
+      },
+      (err) => { }
+    )
   }
 
   opencategory(id) {
@@ -57,28 +63,29 @@ export class HomePage {
       // this.initFunction(data.coords.latitude, data.coords.longitude);
     });
   }
-  
+
   load_recomment() {
     this.db.showloading();
-        this.db.getPostbyCategory(132, this.page,this.db.language).then(
-          data => {
-          this.data_recomment = data;
-            for (let i = 0; i < this.data_recomment.length; i++) {
-              this.getimagefeature(this.data_recomment[i].featured_media, this.data_recomment[i].id);
-              // console.log("Recomment id", this.data_recomment[i].id);
-            }
-          },
-          err => { console.log('error', err) }
-        )
+    this.db.getPostbyCategory(132, this.page, this.db.language).then(
+      data => {
+        this.data_recomment = data;
+        for (let i = 0; i < this.data_recomment.length; i++) {
+          this.getimagefeature(this.data_recomment[i].featured_media, this.data_recomment[i].id);
+          // console.log("Recomment id", this.data_recomment[i].id);
+        }
+      },
+      err => { console.log('error', err) }
+    )
   }
 
   load_data() {
+    console.log("data lang", this.db.language)
     this.db.getdatainhomepage(this.db.language).then(
       alldata => {
         this.category = alldata;
         for (let i = 0; i < this.category.length; i++) {
           for (let a = 0; a < this.category[i].data.length; a++) {
-            this.getimagefeature(alldata[i].data[a].featured_media, alldata[i].data[a].id);
+            this.getimagefeature(this.category[i].data[a].featured_media, this.category[i].data[a].id);
             // console.log('data',alldata[i].data[a]);
           }
         }
@@ -89,8 +96,8 @@ export class HomePage {
   }
 
 
+
   openmap(destlat, destlng) {
-    this.db.showloading();
     let source: any = [this.curlat, this.curlng];
     let options: LaunchNavigatorOptions = {
       start: source
@@ -115,7 +122,7 @@ export class HomePage {
   getimagefeature(feature_id, post_id) {
     this.db.getmedia_picture(feature_id).then(
       datas => {
-      this.imgfeature = datas;
+        this.imgfeature = datas;
         if (!datas) {
           this.feature_image[post_id] = "";
         } else {
@@ -127,6 +134,6 @@ export class HomePage {
     )
   }
 
-  
+
 
 }

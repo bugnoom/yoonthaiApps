@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { DbProvider } from './../../providers/db/db';
 import { I18nSwitcherProvider } from './../../providers/i18n-switcher/i18n-switcher';
 import { Component } from '@angular/core';
@@ -19,7 +20,7 @@ export class SettingPage {
 
   language : string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private I18nSwitcherProvider: I18nSwitcherProvider, private db : DbProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private I18nSwitcherProvider: I18nSwitcherProvider, private db : DbProvider, private storage : Storage) {
   }
 
   ionViewDidLoad() {
@@ -29,7 +30,8 @@ export class SettingPage {
   switch(lang: string) {
     this.I18nSwitcherProvider.switchLang(lang);
     this.db.language = lang;
-    this.navCtrl.setRoot('HomePage')
+    this.navCtrl.setRoot('HomePage');
+    this.storage.set('mylang',lang);
   }
 
 }
