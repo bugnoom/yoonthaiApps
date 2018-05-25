@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="bgcolor">
-    <ion-title [innerHtml]="data.title" class="headertitle"></ion-title>
+    <ion-title class="headertitle"><p [innerHtml]="data.title"></p></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,24 +16,59 @@
 <ion-content class="contentdark" #container>
   <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll"
   />
-  <ion-row>
-    <ion-col style="background-color:#555;color:#fff;">
+  
       <ion-row>
         <ion-col>
-          <ion-title style="color:#fff;">{{data.title}}</ion-title>
+          <ion-title style="color:#fff;padding-left: 15px;
+          padding-top: 10px;" class="headertitle" [innerHtml]="data.title"></ion-title>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-icon name="clock"></ion-icon>{{opendatetime(detaildata)}}
-        </ion-col>
-        <ion-col><p item-right>
-          <button ion-button icon-left clear small item-end>
-            <ion-icon name="call"></ion-icon>
-            Call me
-          </button></p>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
+      <ion-card>
+        
+      <ion-list class="list-ios">
+        <ion-list-header> <ion-icon name="clock"></ion-icon> Hour</ion-list-header>
+        <ion-item class="item-ios">  {{opendatetime(detaildata)}}</ion-item>
+      </ion-list>
+      <ion-list class="list-ios">
+        <ion-list-header><ion-icon name="call"></ion-icon> Call</ion-list-header>
+        <ion-item class="item-ios"><button ion-button icon-left clear small item-start (click)="callout(detaildata.tel_number)">
+          {{detaildata.tel_number}}
+        </button></ion-item>
+      </ion-list>
+      <ion-list class="list-ios">
+        <ion-list-header>Address</ion-list-header>
+        <ion-item class="item-ios"> 
+          {{detaildata.address}}
+        </ion-item>
+      </ion-list>
+      <ion-list class="list-ios">
+        <ion-item class="item-ios"> 
+          <button (click)="openpage(detaildata.facebook_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.facebook_url != ''" ><ion-icon name="logo-facebook"></ion-icon></button>
+          <button (click)="openpage(detaildata.instagram_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.instagram_url != ''"><ion-icon name="logo-instagram"></ion-icon></button>
+          <button (click)="openpage(detaildata.twitter_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.twitter_url != ''"><ion-icon name="logo-twitter"></ion-icon></button>
+          <button (click)="openpage(detaildata.youtube_chanel)" ion-button icon-left icon-only clear  *ngIf="detaildata.youtube_chanel != ''"><ion-icon name="logo-youtube"></ion-icon></button>
+          <button (click)="openpage(detaildata.website_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.website_url != ''"><ion-icon name="ios-globe-outline"></ion-icon></button>
+        </ion-item>
+      </ion-list>
+      
+      <ion-card-content>
+         <div id="gallery-1" [innerHTML]= "data.content"></div>
+        </ion-card-content>
+      </ion-card>
+      <p class="bold-title">Comments:</p>
+      <ion-item *ngFor="let comment of comments">
+        <ion-avatar item-start>
+          <img src="{{comment.author_avatar_urls[24]}}">
+        </ion-avatar>
+        <h2>{{comment.author_name}}</h2>
+        <p [innerHTML]="comment.content.rendered"></p>
+      </ion-item>
+      <!-- <ion-infinite-scroll [enabled]="morePagesAvailable" (ionInfinite)="loadMoreComments($event)">
+        <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more comments...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll> -->
+      
+  
 </ion-content>

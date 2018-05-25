@@ -1,6 +1,6 @@
 
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, NavController } from 'ionic-angular';
+import { Platform, Nav, NavController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -13,9 +13,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { I18nSwitcherProvider } from './../providers/i18n-switcher/i18n-switcher';
 import { Subscription } from 'rxjs/Subscription';
 
-
-
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -24,23 +21,51 @@ export class MyApp {
 
   rootPage: any = 'HomePage';
   logedin: boolean;
+  userdetail: any = [];
   categorylist: any = [];
+  avatar : string;
 
   private i18nSubscription: Subscription;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events) {
     this.initalApps();
     this.initTranslate();
     this.getcategory();
-    this.logedin = false
+    this.checklogin();
+
+   
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.db.getParentCategories(this.db.language).then(
+      this.db.getParentCategories(event.lang).then(
         data => { this.categorylist = data; console.log('cate data', data) },
         err => { console.log(err); }
       );
     })
 
+  }
+
+  checklogin() {
+    this.event.subscribe('user:login',(data)=>{
+      this.userdetail = data;
+    })
+    this.storage.get('data_login').then(
+      (data) => {
+        this.userdetail = data;
+        if (this.userdetail) {
+          this.logedin = true;
+          console.log("uername",this.userdetail);
+         this.avatar = this.userdetail.avatar_urls[96];
+        } else {
+          console.log("uername erro");
+          this.logedin = false;
+        }
+
+      },
+      err => {
+        console.log("uername erro", err);
+        this.logedin = false;
+      }
+    )
   }
 
   initalApps() {

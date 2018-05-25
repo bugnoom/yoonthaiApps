@@ -1,3 +1,4 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Globalization } from '@ionic-native/globalization';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -21,6 +22,8 @@ import { LaunchNavigator  } from '@ionic-native/launch-navigator';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { I18nSwitcherProvider } from '../providers/i18n-switcher/i18n-switcher';
+
+import { CallNumber } from '@ionic-native/call-number'
 
 
 
@@ -60,7 +63,9 @@ export function createTranslateLoader(http:HttpClient){
     GoogleMaps,
     LaunchNavigator,
     Globalization,
-    I18nSwitcherProvider
+    I18nSwitcherProvider,
+    InAppBrowser,
+    CallNumber
     
   ]
 })

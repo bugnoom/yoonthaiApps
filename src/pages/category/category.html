@@ -13,12 +13,12 @@
 </ion-header>
 
 <ion-content #container class="contentdark" >
-  <ion-card *ngFor="let row of cate_list" class="cardoption" >
-    <ion-item class="cardheaditem">
+  <ion-card *ngFor="let row of cate_list" class="cardoption"  >
+    <ion-item class="cardheaditem" (click)="opendetail(row,this.feature_image[row.id])">
       <h2>{{row.title.rendered}}</h2>
      
     </ion-item>
-    <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_image[row.id]"  (click)="opendetail(row)" [scrollObservable]="container.ionScroll" [offset]="1000" />
+    <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_image[row.id]"  (click)="opendetail(row,this.feature_image[row.id])" [scrollObservable]="container.ionScroll" [offset]="1000" />
     <ion-card-content>
       <p [innerHtml]="row.excerpt.rendered"></p>
     </ion-card-content>

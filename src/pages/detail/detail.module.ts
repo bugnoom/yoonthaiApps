@@ -4,6 +4,7 @@ import { DetailPage } from './detail';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { ComponentsModule } from './../../components/components.module';
 
+
 @NgModule({
   declarations: [
     DetailPage,
@@ -11,7 +12,11 @@ import { ComponentsModule } from './../../components/components.module';
   imports: [
     IonicPageModule.forChild(DetailPage),
     ComponentsModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+  
   ],
+  exports:[
+    DetailPage
+  ]
 })
 export class DetailPageModule {}

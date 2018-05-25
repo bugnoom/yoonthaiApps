@@ -46,9 +46,10 @@ page-login {
          }
      
          .submit-btn {
-           background: #000000;
+           background:map-get($colors, 'bluecolor' );
            border-radius: 20px !important;
            border: 1px solid #ffffff;
+           color:map-get($colors, 'bgcolor' )
          }
      
          .register-btn {

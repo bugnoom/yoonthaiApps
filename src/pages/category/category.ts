@@ -45,6 +45,7 @@ watchlocation(){
     this.db.showloading();
     this.db.getPostbyCategory(this.cate_id,this.page,this.db.language).then(data=>{
       this.cate_list = data;
+      console.log('adfad',this.cate_list);
       for(let i = 0; i < this.cate_list.length; i++){
         this.feature_image[this.cate_list[i].id] = this.getimagefeature(this.cate_list[i].featured_media, this.cate_list[i].id);
         console.log("cate", this.feature_image[this.cate_list[i].id])
@@ -63,8 +64,9 @@ watchlocation(){
     )
   }
 
-  opendetail(id) {
-    this.navCtrl.push('DetailPage', { ids: id });
+  opendetail(data, fea) {
+    let lat_lng = { lat: this.curlat, lng: this.curlng }
+    this.navCtrl.push('DetailPage', { detaildata: data, featureImage: fea, lat_lng: lat_lng });
   }
 
   getimagefeature(feature_id,post_id){

@@ -6,9 +6,12 @@
 
   <ion-content class="mainmenu">
       <ion-card text-center class="hide-card">
-          <img src="https://github.com/ionic-team/ionic-preview-app/blob/master/src/assets/img/nin-live.png?raw=true" class="custom-avatar"/>
-          
-          <h2 *ngIf="logedin" >Username</h2>
+          <img  [src]="avatar"  class="custom-avatar"/>
+          <ion-item *ngIf="logedin"> 
+            <ion-title style="justify-content: center"><h2  >{{userdetail.name}}</h2></ion-title>
+            <button item-end ion-button  clear outline icon-only menuClose (click)="opensetting()"><ion-icon name="settings"></ion-icon></button>
+          </ion-item>
+         
           <h2 *ngIf="!logedin" ><button ion-button menuClose (click)="openlogin()" >Login</button></h2>
           
       </ion-card>

@@ -1,5 +1,5 @@
 import { I18nSwitcherProvider } from './../i18n-switcher/i18n-switcher';
-import { HttpClient,HttpResponse } from '@angular/common/http';
+import { HttpClient,HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -103,6 +103,18 @@ export class DbProvider {
         resolve()
         console.log(err);
       });
+    });
+  }
+
+  getlogin(username,password){
+    let url = this.url + "?action=userLogin&username="+username+"&password="+password;
+    return new Promise(resolve => {
+      this.http.get(url).subscribe(
+        data => {
+          resolve(data);
+        }, err =>{
+          console.log(err);
+        });
     });
   }
 

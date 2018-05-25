@@ -9,7 +9,7 @@
 
 <ion-content class="login-content" >
     <ion-row class="logo-row">
-      <h1>Login</h1>
+      <h1>{{'login' | translate }}</h1>
     </ion-row>
     <div class="login-box">
       <form (ngSubmit)="login()" #registerForm="ngForm">
@@ -17,11 +17,11 @@
           <ion-col>
             <ion-list inset>
               <ion-item>
-                <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+                <ion-input type="text" placeholder="{{'username_or_email' | translate}}" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
               </ion-item>
               
               <ion-item>
-                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+                <ion-input type="password" placeholder="{{'password' | translate}}" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
               </ion-item>
               
             </ion-list>
@@ -30,19 +30,19 @@
         
         <ion-row>
           <ion-col class="signup-col">
-            <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+            <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">{{'login' | translate}}</button>
           </ion-col>
         </ion-row>
-
+      </form>
         <ion-row class="text-col">
           <ion-col>
-              <button ion-button class="register-btn" block clear (click)="createAccount()">Forgot your password</button>
+              <button ion-button class="register-btn" block clear (click)="createAccount()">{{'forgot_pass' | translate}}</button>
           </ion-col>
           <ion-col>
-              <button ion-button class="register-btn" block clear (click)="createAccount()">Create New Account</button>
+              <button ion-button class="register-btn" block clear (click)="createAccount()">{{'new_account' | translate }}</button>
           </ion-col>
         </ion-row>
         
-      </form>
+      
     </div>
   </ion-content>
