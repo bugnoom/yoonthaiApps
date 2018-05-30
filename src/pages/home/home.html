@@ -10,7 +10,20 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title> </ion-title>
-    
+    <ion-buttons end color="bgcolor">
+      <button ion-button clear icon-only (click)="openweb('webboard')" >
+        <ion-icon name="chatbubbles"></ion-icon>
+      </button>
+      <button ion-button clear icon-only (click)="openweb('facebook')" >
+        <ion-icon name="logo-facebook"></ion-icon>
+      </button>
+      <button ion-button clear icon-only (click)="openweb('instragram')" >
+        <ion-icon name="logo-instagram"></ion-icon>
+      </button>
+      <button ion-button clear icon-only (click)="openweb('youtube')" >
+        <ion-icon name="logo-youtube"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>

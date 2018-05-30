@@ -21,6 +21,8 @@ export class DetailPage {
   cur_lng = 0;
   comments: Array<any> = new Array<any>();
 
+  javascriptText = '<script src="http://www.yoonthai.com/wp-content/themes/yoonthai_theme/assets/node_modules/fancybox/jquery.fancybox.pack.js"></script><link rel="stylesheet" href="http://www.yoonthai.com/wp-content/themes/yoonthai_theme/assets/node_modules/fancybox/jquery.fancybox.css" /><script src="http://www.yoonthai.com/wp-content/themes/yoonthai_theme/assets/node_modules/fancybox/lightbox.js"></script>';
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage,private sanitizer : DomSanitizer, private inb : InAppBrowser, private callnumber : CallNumber) {
     this.detaildata = this.navParams.get('detaildata');
     this.feature_img = this.navParams.get('featureImage');
@@ -34,7 +36,7 @@ export class DetailPage {
     console.log('latlng', this.position.lat, this.position.lng);
     this.data = {
                   title : this.detaildata.title.rendered,
-                  content : this.sanitizer.bypassSecurityTrustHtml(this.detaildata.content.rendered)
+                  content : this.sanitizer.bypassSecurityTrustHtml(this.javascriptText + this.detaildata.content.rendered)
                 };
   }
 
@@ -75,8 +77,28 @@ export class DetailPage {
     .catch(
       () => alert('Sorry! your system is not support for call out')
     )
+  }
 
-    
+  openweb(link){
+    let url = "";
+    switch(link){
+      case "webboard":
+       url = 'http://www.yoonthai.com/'+this.db.language+'/topics';
+      this.inb.create(url,"_blank","location=no");
+      break;
+      case "facebook":
+       url = "https://www.facebook.com/youinthai";
+      this.inb.create(url,"_blank","location=no");
+      break;
+      case "instragram":
+      url = "https://www.instagram.com/yoointhai/"
+      this.inb.create(url,"_blank","location=no");
+      break;
+      case "youtube":
+      url ="https://www.youtube.com/channel/UCnPZS16z_g5SiyupCqiR8ag"
+      this.inb.create(url,"_blank","location=no");
+      break;
+    }
   }
 
 }

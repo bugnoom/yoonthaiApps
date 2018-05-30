@@ -24,6 +24,7 @@
     <preference name="SplashReloadOnOrientationChange" value="true" />
     <preference name="AllowInlineMediaPlayback" value="true" />
     <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="StatusBarStyle" value="lightcontent" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -98,7 +99,13 @@
     </plugin>
     <plugin name="cordova-plugin-nativestorage" spec="^2.3.1" />
     <plugin name="cordova-plugin-globalization" spec="^1.11.0" />
-    <plugin name="cordova-plugin-googlemaps" spec="^2.3.4">
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
+    <plugin name="cordova-sqlite-storage" spec="^2.3.2" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
+    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
+    <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="4.5.4" />
+    <plugin name="cordova-plugin-googlemaps" spec="^2.3.5">
         <variable name="API_KEY_FOR_ANDROID" value="apikey" />
         <variable name="API_KEY_FOR_IOS" value="apikey" />
         <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
@@ -106,10 +113,4 @@
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
     </plugin>
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
-    <plugin name="cordova-sqlite-storage" spec="^2.3.2" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
-    <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="4.5.4" />
 </widget>

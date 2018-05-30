@@ -1,3 +1,4 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Globalization } from '@ionic-native/globalization';
 import { I18nSwitcherProvider } from './../../providers/i18n-switcher/i18n-switcher';
 
@@ -33,8 +34,9 @@ export class HomePage {
   page: number = 1;
 
   mylang: string;
+  sociallink : any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, private inb : InAppBrowser) {
     
   }
 
@@ -95,7 +97,37 @@ export class HomePage {
 
   }
 
+  loadsocial(){
+    this.db.getsocialLink(this.db.language).then(
+      socialdata =>{
+        this.sociallink = socialdata
+      }
+    )
+  }
 
+
+  openweb(link){
+    let url = "";
+    switch(link){
+      case "webboard":
+       url = 'http://www.yoonthai.com/'+this.db.language+'/topics';
+      this.inb.create(url,"_blank","location=no");
+      break;
+      case "facebook":
+       url = "https://www.facebook.com/youinthai";
+      this.inb.create(url,"_blank","location=no");
+      break;
+      case "instragram":
+      url = "https://www.instagram.com/yoointhai/"
+      this.inb.create(url,"_blank","location=no");
+      break;
+      case "youtube":
+      url ="https://www.youtube.com/channel/UCnPZS16z_g5SiyupCqiR8ag"
+      this.inb.create(url,"_blank","location=no");
+      break;
+    }
+    
+  }
 
   openmap(destlat, destlng) {
     let source: any = [this.curlat, this.curlng];

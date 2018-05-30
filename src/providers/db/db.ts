@@ -106,6 +106,19 @@ export class DbProvider {
     });
   }
 
+  getsocialLink(lang){
+    var url = this.baseURL+lang+"/wp-json/wp/v2/social_menu";
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        resolve();
+        console.log(err);
+      });
+    });
+  }
+
+
   getlogin(username,password){
     let url = this.url + "?action=userLogin&username="+username+"&password="+password;
     return new Promise(resolve => {

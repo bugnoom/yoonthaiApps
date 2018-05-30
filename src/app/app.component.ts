@@ -44,10 +44,17 @@ export class MyApp {
 
   }
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.checklogin();
+  }
+
   checklogin() {
     this.event.subscribe('user:login',(data)=>{
       this.userdetail = data;
     })
+
     this.storage.get('data_login').then(
       (data) => {
         this.userdetail = data;
@@ -72,7 +79,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
+      this.statusBar.styleLightContent();
       this.statusBar.backgroundColorByHexString('#555555');
 
       this.splashScreen.hide();

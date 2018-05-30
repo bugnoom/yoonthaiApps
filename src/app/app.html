@@ -4,8 +4,8 @@
     
   </ion-toolbar>
 
-  <ion-content class="mainmenu">
-      <ion-card text-center class="hide-card">
+  <ion-content class="mainmenu contentdark">
+      <ion-card text-center class="hide-card contentdark">
           <img  [src]="avatar"  class="custom-avatar"/>
           <ion-item *ngIf="logedin"> 
             <ion-title style="justify-content: center"><h2  >{{userdetail.name}}</h2></ion-title>
@@ -16,11 +16,11 @@
           
       </ion-card>
     
-    <ion-list style="padding-bottom:5rem;">
-        <button menuClose ion-item (click)="opensetting()"  >
+    <ion-list style="padding-bottom:5rem;" class="contentdark">
+        <button menuClose ion-item (click)="opensetting()"   class="contentdark" >
             <span>{{'setting' | translate}}</span>
           </button>
-      <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" >
+      <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" class="contentdark" >
         <span [innerHtml] = "row.name"></span><ion-badge item-end>{{row.count}}</ion-badge>
       </button>
     </ion-list>

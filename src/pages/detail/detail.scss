@@ -28,11 +28,17 @@ page-detail {
         height:auto;
         width:100%;
     }
+    #gallery-1 .gallery-item {
+        float: left;
+        margin-top: 10px;
+        text-align: center;
+        width: 33.333334%;
+    }
 
     .gallery-icon  img{
         height:auto !important;
     }
-    #gallery-1 .gallery-item {
+   /*  #gallery-1 .gallery-item {
         float: left;
         margin-top: 10px;
         text-align: center;
@@ -55,7 +61,7 @@ page-detail {
 			}
 			#gallery-1 .gallery-caption {
 				margin-left: 0;
-			}
+			} */
 			/* see gallery_shortcode() in wp-includes/media.php */
 		
 		
