@@ -35,13 +35,13 @@ export class LoginPage {
         this.datalogin = data;
         if(!this.datalogin.id){
           this.db.hideloading();
-          this.event.publish("user:login",this.datalogin);
           this.showtoast('Error Login')
         }else{
           //set login detail
           this.db.hideloading();
           this.storage.set("logedin","Y");
           this.storage.set("data_login",this.datalogin);
+          this.event.publish("user:login",this.datalogin);
           this.navCtrl.setRoot("HomePage");
         }
         

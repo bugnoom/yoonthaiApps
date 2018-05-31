@@ -1,14 +1,12 @@
 <ion-menu [content]="content">
 
-  <ion-toolbar color="bgcolor">
-    
-  </ion-toolbar>
+  
 
   <ion-content class="mainmenu contentdark">
       <ion-card text-center class="hide-card contentdark">
           <img  [src]="avatar"  class="custom-avatar"/>
-          <ion-item *ngIf="logedin"> 
-            <ion-title style="justify-content: center"><h2  >{{userdetail.name}}</h2></ion-title>
+          <ion-item *ngIf="logedin" class="contentdark" style="border-bottom:1px solid #ccc;"> 
+            <ion-title style="justify-content: center; "><h2 style="color:#fff;" >{{userdetail.name}}</h2></ion-title>
             <button item-end ion-button  clear outline icon-only menuClose (click)="opensetting()"><ion-icon name="settings"></ion-icon></button>
           </ion-item>
          
@@ -22,6 +20,9 @@
           </button>
       <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" class="contentdark" >
         <span [innerHtml] = "row.name"></span><ion-badge item-end>{{row.count}}</ion-badge>
+      </button>
+      <button menuClose ion-item *ngIf="logedin"  (click)="logout()" class="contentdark" >
+        <span>Logout</span>
       </button>
     </ion-list>
   </ion-content>

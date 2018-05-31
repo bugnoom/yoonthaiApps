@@ -28,8 +28,15 @@
 
 
 <ion-content class="contentdark" #container>
-  <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll"
+ 
+  <img *ngIf="!detaildata.youtube_url"  class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll"
   />
+  <iframe *ngIf="detaildata.youtube_url"   width="100%"
+  height="315"
+  [src]="trustedVideoUrl ? trustedVideoUrl : null"
+  (load)="trustedVideoUrl ? handleIFrameLoadEvent() : null"
+  frameborder="0"
+  allowfullscreen  ></iframe>
   
       <ion-row>
         <ion-col>

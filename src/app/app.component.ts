@@ -20,7 +20,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = 'HomePage';
-  logedin: boolean;
+  logedin: boolean = false;
   userdetail: any = [];
   categorylist: any = [];
   avatar : string;
@@ -32,6 +32,11 @@ export class MyApp {
     this.initTranslate();
     this.getcategory();
     this.checklogin();
+    
+    this.event.subscribe('user:login',(data)=>{
+      console.log("wellcome");
+      this.checklogin();
+    })
 
    
 
@@ -51,10 +56,7 @@ export class MyApp {
   }
 
   checklogin() {
-    this.event.subscribe('user:login',(data)=>{
-      this.userdetail = data;
-    })
-
+    console.log("wellcome Startpage",this.storage.get('data_login'));
     this.storage.get('data_login').then(
       (data) => {
         this.userdetail = data;
@@ -65,6 +67,7 @@ export class MyApp {
         } else {
           console.log("uername erro");
           this.logedin = false;
+          this.avatar = 'assets/imgs/no-image.jpg';
         }
 
       },
@@ -149,6 +152,13 @@ export class MyApp {
 
   openlogin() {
     this.nav.push('LoginPage');
+  }
+
+  logout(){
+    this.storage.remove('data_login');
+    this.storage.remove('logedin');
+    this.logedin = false;
+    this.nav.setRoot('HomePage');
   }
 
   getcategory() {

@@ -25,6 +25,7 @@ import { I18nSwitcherProvider } from '../providers/i18n-switcher/i18n-switcher';
 
 import { CallNumber } from '@ionic-native/call-number'
 
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 
 export function createTranslateLoader(http:HttpClient){
@@ -65,7 +66,8 @@ export function createTranslateLoader(http:HttpClient){
     Globalization,
     I18nSwitcherProvider,
     InAppBrowser,
-    CallNumber
+    CallNumber,
+    PhotoViewer
     
   ]
 })

@@ -1,10 +1,13 @@
-import { DomSanitizer } from '@angular/platform-browser';
+
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from  '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { CallNumber } from '@ionic-native/call-number'
+import { CallNumber } from '@ionic-native/call-number';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+
 
 @IonicPage()
 @Component({
@@ -20,10 +23,9 @@ export class DetailPage {
   position : any ; 
   cur_lng = 0;
   comments: Array<any> = new Array<any>();
+  trustedVideoUrl: SafeResourceUrl;
 
-  javascriptText = '<script src="http://www.yoonthai.com/wp-content/themes/yoonthai_theme/assets/node_modules/fancybox/jquery.fancybox.pack.js"></script><link rel="stylesheet" href="http://www.yoonthai.com/wp-content/themes/yoonthai_theme/assets/node_modules/fancybox/jquery.fancybox.css" /><script src="http://www.yoonthai.com/wp-content/themes/yoonthai_theme/assets/node_modules/fancybox/lightbox.js"></script>';
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage,private sanitizer : DomSanitizer, private inb : InAppBrowser, private callnumber : CallNumber) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage,private sanitizer : DomSanitizer, private inb : InAppBrowser, private callnumber : CallNumber, private photoviewer : PhotoViewer,private domSanitizer: DomSanitizer) {
     this.detaildata = this.navParams.get('detaildata');
     this.feature_img = this.navParams.get('featureImage');
     this.position = this.navParams.get('lat_lng');
@@ -31,13 +33,31 @@ export class DetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetailPage',this.detaildata);
+    console.log("youtube url",this.detaildata.youtube_url);
    
     console.log('fea',this.feature_img);
     console.log('latlng', this.position.lat, this.position.lng);
+    
+    let regx = /href='([\S]+)'/g;
+   // let newString = this.detaildata.content.rendered.replace(regx,"href=\"#\" onClick=\"window.open('$1', '_blank', 'location=yes')\"");
+   
+   let newString = this.detaildata.content.rendered.replace(regx," (click)=\"showPhotoView('$1')\"" );
     this.data = {
                   title : this.detaildata.title.rendered,
-                  content : this.sanitizer.bypassSecurityTrustHtml(this.javascriptText + this.detaildata.content.rendered)
+                  content : this.sanitizer.bypassSecurityTrustHtml(newString)
                 };
+
+                this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.detaildata.youtube_url);
+    
+  }
+
+ 
+  handleIFrameLoadEvent(): void {
+    //this.db.hideloading();
+}
+
+  showPhotoView(url){
+    this.photoviewer.show(url);
   }
 
   opendatetime(data){
