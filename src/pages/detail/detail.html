@@ -57,12 +57,13 @@
         </button></ion-item>
       </ion-list>
       <ion-list class="list-ios">
-        <ion-list-header>Address</ion-list-header>
+        <ion-list-header><ion-icon name="home"></ion-icon>Address</ion-list-header>
         <ion-item class="item-ios"> 
-          {{detaildata.address}}
+          <p>{{detaildata.address}}</p>
         </ion-item>
       </ion-list>
       <ion-list class="list-ios">
+        <ion-list-header><ion-icon name="link"></ion-icon>Home Pages</ion-list-header>
         <ion-item class="item-ios"> 
           <button (click)="openpage(detaildata.facebook_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.facebook_url != ''" ><ion-icon name="logo-facebook"></ion-icon></button>
           <button (click)="openpage(detaildata.instagram_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.instagram_url != ''"><ion-icon name="logo-instagram"></ion-icon></button>

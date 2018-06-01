@@ -25,12 +25,14 @@ export class MyApp {
   categorylist: any = [];
   avatar : string;
 
+ private menuicon : any =[];
+
   private i18nSubscription: Subscription;
 
   constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events) {
     this.initalApps();
     this.initTranslate();
-    this.getcategory();
+    this.getcategory(this.db.language);
     this.checklogin();
     
     this.event.subscribe('user:login',(data)=>{
@@ -38,13 +40,9 @@ export class MyApp {
       this.checklogin();
     })
 
-   
-
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.db.getParentCategories(event.lang).then(
-        data => { this.categorylist = data; console.log('cate data', data) },
-        err => { console.log(err); }
-      );
+      this.getcategory(event.lang);
+      
     })
 
   }
@@ -158,12 +156,20 @@ export class MyApp {
     this.storage.remove('data_login');
     this.storage.remove('logedin');
     this.logedin = false;
+    this.db.logedin = false;
     this.nav.setRoot('HomePage');
   }
 
-  getcategory() {
-    this.db.getParentCategories(this.db.language).then(
-      data => { this.categorylist = data; console.log('cate data', data) },
+  getcategory(lang) {
+    this.db.getParentCategories(lang).then(
+      data => { 
+        this.categorylist = data; 
+        for(let i = 0; i < this.categorylist.length; i++){
+          let slugname = this.categorylist[i].slug.split('-');
+          this.menuicon[this.categorylist[i].slug] = 'assets/imgs/'+slugname[0].trim()+'.png';
+        }
+        console.log('icon is',this.menuicon);
+        console.log('cate data', data) },
       err => { console.log(err); }
     );
 

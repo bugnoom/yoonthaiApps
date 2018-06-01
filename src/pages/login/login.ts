@@ -1,6 +1,7 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DbProvider } from './../../providers/db/db';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Events} from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController, Events, Navbar} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 /**
@@ -16,15 +17,20 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  @ViewChild(Navbar) navBar : Navbar
 
   registerCredentials :any = {email : '', password : ''}
   datalogin : any = {}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage, private toast : ToastController, public event : Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage, private toast : ToastController, public event : Events, private inb : InAppBrowser) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+      // todo something
+      this.navCtrl.pop();
+     }
   }
 
   login(){
@@ -53,6 +59,7 @@ export class LoginPage {
     )
   }
 
+  
 
   showtoast(message){
     let toast = this.toast.create({
@@ -69,7 +76,13 @@ export class LoginPage {
   }
 
   createAccount(){
+  let url = 'http://www.yoonthai.com/'+this.db.language+'/Register/';
+      this.inb.create(url,"_blank","location=no");
+  }
 
+  resetPassword(){
+    let url = 'http://www.yoonthai.com/'+this.db.language+'/password-reset/';
+      this.inb.create(url,'_blank',"location=no");
   }
 
 }

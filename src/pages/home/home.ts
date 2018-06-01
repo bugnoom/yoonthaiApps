@@ -36,6 +36,8 @@ export class HomePage {
   mylang: string;
   sociallink : any = [];
 
+  cateicon : any = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, private inb : InAppBrowser) {
     
   }
@@ -84,8 +86,12 @@ export class HomePage {
     console.log("data lang", this.db.language)
     this.db.getdatainhomepage(this.db.language).then(
       alldata => {
+        console.log("data cate",alldata);
         this.category = alldata;
         for (let i = 0; i < this.category.length; i++) {
+          let slugname = this.category[i].slug.split('-');
+          console.log('slugname',slugname[0]);
+          this.cateicon[this.category[i].slug] = "assets/imgs/"+slugname[0].trim()+".png";
           for (let a = 0; a < this.category[i].data.length; a++) {
             this.getimagefeature(this.category[i].data[a].featured_media, this.category[i].data[a].id);
             // console.log('data',alldata[i].data[a]);
@@ -110,8 +116,9 @@ export class HomePage {
     let url = "";
     switch(link){
       case "webboard":
-       url = 'http://www.yoonthai.com/'+this.db.language+'/topics';
+      url = 'http://www.yoonthai.com/'+this.db.language+'/topics';
       this.inb.create(url,"_blank","location=no");
+      //    this.navCtrl.push('WebboardPage')
       break;
       case "facebook":
        url = "https://www.facebook.com/youinthai";

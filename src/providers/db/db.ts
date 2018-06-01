@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { I18nSwitcherProvider } from './../i18n-switcher/i18n-switcher';
 import { HttpClient,HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -28,8 +29,9 @@ export class DbProvider {
  clng : any;
 
  feature_image: any = [];
+ logedin :boolean = false;
  
-  constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService, private i18n : I18nSwitcherProvider) {
+  constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService, private i18n : I18nSwitcherProvider, private storage : Storage) {
      
   }
 
@@ -129,6 +131,27 @@ export class DbProvider {
           console.log(err);
         });
     });
+  }
+
+  getwebboard(page){
+    let url = this.url + "?action=getCommentPost&page="+page+"&language="+this.language;
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        console.log(err);
+      });
+    });
+  }
+
+  //check Login status
+  checklogin(){
+     this.storage.get('data_login').then(
+       data => {this.logedin = true;},
+       err => { this.logedin = false;}
+     ).catch(
+       () => {this.logedin = false}
+     )
   }
 
   // REF : https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/27943#27943

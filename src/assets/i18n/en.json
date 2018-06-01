@@ -7,11 +7,14 @@
 
 
     "login" : "Login",
+    "cancel" : "Cancel",
     "username_or_email" : "Username or Email",
     "password" : "Password",
     "forgot_pass" : "Forgot your password",
     "new_account" : "Create New Account",
 
-    "banner_img" : "Dainut_ad_th.jpg"
+    "banner_img" : "Dainut_ad_th.jpg",
+
+    "text_check_login":"You don't have permission to access this page, Please Login"
 
 }

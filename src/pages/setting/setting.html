@@ -6,17 +6,17 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="bgcolor">
     <ion-title>setting</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
+<ion-content class="contentdark">
   <ion-list>
-    <ion-item>
-      <ion-label>{{'txt_lang' | translate}}</ion-label>
+    <ion-item class="contentdark">
+      <ion-label style="color:#fff;">{{'txt_lang' | translate}}</ion-label>
       <ion-select [(ngModel)]="language" (ionChange)="switch(language)"  interface="action-sheet">
         <ion-option value="th">TH</ion-option>
         <ion-option value="ko">KO</ion-option>

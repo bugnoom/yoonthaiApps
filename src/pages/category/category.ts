@@ -21,6 +21,8 @@ export class CategoryPage {
   diff : string = "0";
 
   page :number = 1;
+  hasMoreData: boolean = true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider,private mylocation : Geolocation,private launchnavigator: LaunchNavigator) {
     
   }
@@ -31,6 +33,31 @@ export class CategoryPage {
     this.getcatename();
     this.showdata();
   }
+
+  doInfinite(even) {
+    // console.log("infinite Scroll");
+    this.page = this.page + 1;
+    setTimeout(() => {
+      this.db.getPostbyCategory(this.cate_id,this.page,this.db.language).then(data=>{
+        let nowcate : any = data;
+        if(nowcate.code){this.hasMoreData = false;return;}
+        for(let i = 0; i < nowcate.length; i++){
+          let catnubmer = this.cate_list.length;
+          this.cate_list[catnubmer] = nowcate[i];
+          this.feature_image[nowcate[i].id] = this.getimagefeature(nowcate[i].featured_media, nowcate[i].id);
+          console.log("now cate", this.feature_image[nowcate[i].id])
+        }
+        console.log('all cate list',this.cate_list);
+        console.log('nowpostdata',data);
+        even.complete();
+      },err=>{
+        console.log('error',err);
+        even.complete();
+      })
+     
+    }, 1000);
+  }
+
 
 watchlocation(){
   let watch = this.mylocation.watchPosition();

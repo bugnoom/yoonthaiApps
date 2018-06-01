@@ -7,7 +7,7 @@
           <img  [src]="avatar"  class="custom-avatar"/>
           <ion-item *ngIf="logedin" class="contentdark" style="border-bottom:1px solid #ccc;"> 
             <ion-title style="justify-content: center; "><h2 style="color:#fff;" >{{userdetail.name}}</h2></ion-title>
-            <button item-end ion-button  clear outline icon-only menuClose (click)="opensetting()"><ion-icon name="settings"></ion-icon></button>
+            <!-- <button item-end ion-button  clear outline icon-only menuClose (click)="opensetting()"><ion-icon name="settings"></ion-icon></button> -->
           </ion-item>
          
           <h2 *ngIf="!logedin" ><button ion-button menuClose (click)="openlogin()" >Login</button></h2>
@@ -15,12 +15,13 @@
       </ion-card>
     
     <ion-list style="padding-bottom:5rem;" class="contentdark">
-        <button menuClose ion-item (click)="opensetting()"   class="contentdark" >
-            <span>{{'setting' | translate}}</span>
-          </button>
+       
       <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" class="contentdark" >
-        <span [innerHtml] = "row.name"></span><ion-badge item-end>{{row.count}}</ion-badge>
+          <img src="{{menuicon[row.slug]}}" height="20" style="float:left;margin-right:10px;" /><span [innerHtml] = "row.name"></span><ion-badge item-end>{{row.count}}</ion-badge>
       </button>
+      <button menuClose ion-item (click)="opensetting()"   class="contentdark" >
+          <span>{{'setting' | translate}}</span>
+        </button>
       <button menuClose ion-item *ngIf="logedin"  (click)="logout()" class="contentdark" >
         <span>Logout</span>
       </button>
