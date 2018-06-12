@@ -1,6 +1,6 @@
 
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, NavController, Events } from 'ionic-angular';
+import { Platform, Nav, NavController, Events, ActionSheetController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -25,18 +25,19 @@ export class MyApp {
   categorylist: any = [];
   avatar : string;
 
- private menuicon : any =[];
+  menuicon : any =[];
 
   private i18nSubscription: Subscription;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events, private actionsheet : ActionSheetController) {
     this.initalApps();
     this.initTranslate();
     this.getcategory(this.db.language);
     this.checklogin();
     
     this.event.subscribe('user:login',(data)=>{
-      console.log("wellcome");
+      console.log("wellcome After",data);
+      this.storage.set("data_login",data);
       this.checklogin();
     })
 
@@ -47,12 +48,7 @@ export class MyApp {
 
   }
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.checklogin();
-  }
-
+  
   checklogin() {
     console.log("wellcome Startpage",this.storage.get('data_login'));
     this.storage.get('data_login').then(
@@ -152,14 +148,7 @@ export class MyApp {
     this.nav.push('LoginPage');
   }
 
-  logout(){
-    this.storage.remove('data_login');
-    this.storage.remove('logedin');
-    this.logedin = false;
-    this.db.logedin = false;
-    this.nav.setRoot('HomePage');
-  }
-
+  
   getcategory(lang) {
     this.db.getParentCategories(lang).then(
       data => { 
@@ -168,8 +157,7 @@ export class MyApp {
           let slugname = this.categorylist[i].slug.split('-');
           this.menuicon[this.categorylist[i].slug] = 'assets/imgs/'+slugname[0].trim()+'.png';
         }
-        console.log('icon is',this.menuicon);
-        console.log('cate data', data) },
+      },
       err => { console.log(err); }
     );
 
@@ -179,8 +167,44 @@ export class MyApp {
     this.nav.push('CategoryPage', { ids: id });
   }
 
+  switch(lang: string) {
+    this.I18nSwitcherProvider.switchLang(lang);
+    this.db.language = lang;
+    this.nav.setRoot('HomePage');
+    this.storage.set('mylang',lang);
+  }
+
+
   opensetting() {
-    this.nav.push('SettingPage');
+    this.actionsheet.create({
+      title : this.translate.instant('txt_lang'),
+      buttons :[
+        {
+          text : this.translate.instant('Th'),
+          handler : ()=>{
+            this.switch('th');
+          }
+        },
+        {
+          text : this.translate.instant('Ko'),
+          handler : ()=>{
+            this.switch('ko');
+          }
+        },
+        {
+          text: this.translate.instant('cancel'),
+          role : "cancel",
+          handler: ()=>{
+            console.log('cancel actionsheet')
+          }
+        }
+      ]
+    }).present();
+    //this.navCtrl.push('SettingPage');
+  }
+
+  openprofile(id){
+    this.nav.push('ProfilePage',{profile : id});
   }
 
 }

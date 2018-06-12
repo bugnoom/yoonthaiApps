@@ -1,4 +1,3 @@
-
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -7,6 +6,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { CallNumber } from '@ionic-native/call-number';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import * as $ from 'jquery';
 
 
 @IonicPage()
@@ -24,27 +24,46 @@ export class DetailPage {
   cur_lng = 0;
   comments: Array<any> = new Array<any>();
   trustedVideoUrl: SafeResourceUrl;
+  scripts : string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage,private sanitizer : DomSanitizer, private inb : InAppBrowser, private callnumber : CallNumber, private photoviewer : PhotoViewer,private domSanitizer: DomSanitizer) {
     this.detaildata = this.navParams.get('detaildata');
     this.feature_img = this.navParams.get('featureImage');
     this.position = this.navParams.get('lat_lng');
+
+    $('#t').click(function(url){
+      console.log("fAAAAAAAAAA",url)
+    })
+  }
+
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    $(document).ready(function(){
+      console.log('Jquery is working!!');
+    })
+
+    
   }
 
   ionViewDidLoad() {
+    
     console.log('ionViewDidLoad DetailPage',this.detaildata);
     console.log("youtube url",this.detaildata.youtube_url);
    
     console.log('fea',this.feature_img);
     console.log('latlng', this.position.lat, this.position.lng);
     
-    let regx = /href='([\S]+)'/g;
-   // let newString = this.detaildata.content.rendered.replace(regx,"href=\"#\" onClick=\"window.open('$1', '_blank', 'location=yes')\"");
+    let regx = /<a href='([\S]+)'>/g;
+
+    this.scripts = "<script>function abc(url){console.log('URLRUL',url);}</script>";
    
-   let newString = this.detaildata.content.rendered.replace(regx," (click)=\"showPhotoView('$1')\"" );
+    //let newString = this.detaildata.content.rendered.replace(regx," id=\"im\" onClick=\"window.open('$1', '_blank', 'location=yes')\"")
+  let newString = this.detaildata.content.rendered.replace(regx," <button id=\"t\" (click)=\"showPhotoView('$1')\">" );
+   
     this.data = {
                   title : this.detaildata.title.rendered,
-                  content : this.sanitizer.bypassSecurityTrustHtml(newString)
+                  content : this.domSanitizer.bypassSecurityTrustHtml(newString)
                 };
 
                 this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.detaildata.youtube_url);
@@ -57,7 +76,8 @@ export class DetailPage {
 }
 
   showPhotoView(url){
-    this.photoviewer.show(url);
+   this.photoviewer.show(url);
+    console.log('image show click');
   }
 
   opendatetime(data){

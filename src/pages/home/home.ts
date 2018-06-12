@@ -118,7 +118,7 @@ export class HomePage {
       case "webboard":
       url = 'http://www.yoonthai.com/'+this.db.language+'/topics';
       this.inb.create(url,"_blank","location=no");
-      //    this.navCtrl.push('WebboardPage')
+        // this.navCtrl.push('WebboardPage')
       break;
       case "facebook":
        url = "https://www.facebook.com/youinthai";

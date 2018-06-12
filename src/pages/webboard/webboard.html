@@ -18,7 +18,7 @@
   <ion-card *ngFor="let item of row" (click)="openDetail(item)" >
     <ion-card-header>
      <p>{{item.post_title}}</p>
-     <small>By : AAAAA</small>
+     <small>By : {{getusername(item.post_author)}}</small>
     </ion-card-header>
   </ion-card>
 

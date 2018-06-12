@@ -20,6 +20,7 @@ export class WebboardPage {
 
   page: number = 1;
   row: any = [];
+  authorname : any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private storage: Storage, public actionsheetCtrl : ActionSheetController, private translate : TranslateService) {
   }
@@ -27,7 +28,15 @@ export class WebboardPage {
   ionViewDidLoad() {
     this.db.checklogin();
     console.log("check",this.db.logedin);
-    if (this.db.logedin) {
+    this.db.showloading();
+      this.db.getwebboard(this.page).then(
+        data => {
+          this.row = data;
+          this.db.hideloading();
+        },
+        err => { console.log("error Webboard;");this.db.hideloading(); }
+      )
+    /* if (this.db.logedin) {
       this.db.showloading();
       this.db.getwebboard(this.page).then(
         data => {
@@ -56,16 +65,20 @@ export class WebboardPage {
         ]
       }).present();
       
-    }
-
-
-
-
+    } */
 
   }
 
   openDetail(data) {
     this.navCtrl.push('WebboardDetailPage', { rowsdata: data })
+  }
+
+  getusername(id){
+    this.db.getuserDetail(id).subscribe(
+      data => {this.authorname = data; console.log('user detail',data);},
+      err => {console.log('Error authorname')}
+    );
+    return this.authorname
   }
 
 }

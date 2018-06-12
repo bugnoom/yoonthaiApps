@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar color="bgcolor">
+    <ion-title>My Profile</ion-title>
+    
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="contentdark">
+  <ion-card text-center class="hide-card contentdark">
+    <img [src]="avatar" class="custom-avatar" />
+    
+    <ion-list class="list-ios">
+        <ion-item class="item-ios">
+            <ion-title>
+              <h2>{{userdetail.detail.nickname}}</h2>
+            </ion-title>
+          </ion-item>
+      <ion-item class="item-ios">
+        <p><ion-icon name="contact"></ion-icon> Name : {{userdetail.detail.firstname}} {{userdetail.detail.last_name}}</p>
+        <button ion-button clear icon-only item-end (click)="editprofile(userdetail.id)">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item class="item-ios">
+        <p><ion-icon name="phone-portrait"></ion-icon> Mobile : {{userdetail.detail.mobile_number}}</p>
+        <button ion-button clear icon-only item-end (click)="editprofile(userdetail.id)">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-item>
+      <button  ion-item (click)="opensetting()"  >
+          <ion-icon name="flag"></ion-icon> <span>{{'txt_lang' | translate}}</span>
+      </button>
+        <button ion-item  (click)="logout()" > <ion-icon name="log-out"></ion-icon> Logout</button>
+      
+    </ion-list>
+  </ion-card>
+</ion-content>

@@ -1,6 +1,6 @@
 import { Storage } from '@ionic/storage';
 import { I18nSwitcherProvider } from './../i18n-switcher/i18n-switcher';
-import { HttpClient,HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class DbProvider {
 
   userlogedin : boolean = false;
-  baseURL: string = "http://www.yoonthai.com/";
+  baseURL: string = "https://www.yoonthai.com/";
   url: string = this.baseURL + "webservices/services.php";//
  /*  baseURL: string = "http://192.168.1.52/yoonthai/";
   url : string = this.baseURL + "mobileservices/services.php"; */
@@ -96,7 +96,7 @@ export class DbProvider {
   getmedia_picture(id){
     if(id == 'undefined'){ return; }
     let l = (this.language == "undefined")? "" : ""+this.language;
-   var url = this.baseURL+"/wp-json/wp/v2/media/"+id
+   var url = this.baseURL+"wp-json/wp/v2/media/"+id
     //var url = this.url + "?action=getmedia&id="+id;
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
@@ -107,6 +107,50 @@ export class DbProvider {
       });
     });
   }
+
+  getuserDetail(id){
+    let url = this.url + "?action=getUserDetail&id="+id;
+    return this.http.get(url);
+  }
+
+  getheader(){
+    let headers = new HttpHeaders();
+    headers.append('Access-Control-Allow-Origin' , '*');
+    headers.append('Access-Control-Allow-Origin' , 'http://localhost:8100');
+    headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+    headers.append('Access-Control-Allow-Headers' ,'Content-Type, Authorization');
+    headers.append('Accept','application/json');
+    headers.append('content-type','application/json');
+    return headers;
+  }
+
+  register_account(datalogin){
+    let url = this.baseURL+"wp-json/wp/v2/users/register";
+    
+    return new Promise(resolve=>{
+      this.http.post(url,datalogin,{ headers: this.getheader() }).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        resolve(err);
+        console.log("register error",err)
+      })
+    })
+  }
+
+  updateaccount(id,userdata){
+    let url = this.baseURL+"wp-json/wp/v2/users/"+id;
+    
+    return new Promise(resolve =>{
+      this.http.post(url,userdata,{headers : this.getheader()}).subscribe(data=>{
+        resolve(data);
+      }, err => {
+        resolve(err);
+        console.log("update error",err);
+      })
+    })
+    
+  }
+
 
   getsocialLink(lang){
     var url = this.baseURL+lang+"/wp-json/wp/v2/social_menu";

@@ -39,15 +39,16 @@ export class LoginPage {
     this.db.getlogin(this.registerCredentials.email, this.registerCredentials.password).then(
       data => {
         this.datalogin = data;
+        console.log("data login", this.datalogin);
         if(!this.datalogin.id){
           this.db.hideloading();
           this.showtoast('Error Login')
         }else{
           //set login detail
-          this.db.hideloading();
           this.storage.set("logedin","Y");
-          this.storage.set("data_login",this.datalogin);
-          this.event.publish("user:login",this.datalogin);
+          this.storage.set("data_login",data);
+          this.event.publish("user:login",data);
+          this.db.hideloading();
           this.navCtrl.setRoot("HomePage");
         }
         
@@ -76,8 +77,9 @@ export class LoginPage {
   }
 
   createAccount(){
-  let url = 'http://www.yoonthai.com/'+this.db.language+'/Register/';
-      this.inb.create(url,"_blank","location=no");
+    this.navCtrl.push('RegisterPage');
+  //let url = 'http://www.yoonthai.com/'+this.db.language+'/Register/';
+   //   this.inb.create(url,"_blank","location=no");
   }
 
   resetPassword(){
