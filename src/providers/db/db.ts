@@ -116,7 +116,6 @@ export class DbProvider {
   getheader(){
     let headers = new HttpHeaders();
     headers.append('Access-Control-Allow-Origin' , '*');
-    headers.append('Access-Control-Allow-Origin' , 'http://localhost:8100');
     headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
     headers.append('Access-Control-Allow-Headers' ,'Content-Type, Authorization');
     headers.append('Accept','application/json');

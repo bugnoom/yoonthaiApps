@@ -56,8 +56,6 @@ export class DetailPage {
     
     let regx = /<a href='([\S]+)'>/g;
 
-    this.scripts = "<script>function abc(url){console.log('URLRUL',url);}</script>";
-   
     //let newString = this.detaildata.content.rendered.replace(regx," id=\"im\" onClick=\"window.open('$1', '_blank', 'location=yes')\"")
   let newString = this.detaildata.content.rendered.replace(regx," <button id=\"t\" (click)=\"showPhotoView('$1')\">" );
    

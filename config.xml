@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.playground.yoonthai" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.playground.yoonthai" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>YoonThai</name>
     <description>Funny Apps for traveler.</description>
     <author email="developper.playground@gmail.com" href="http://www.yoonthai.com/">YoonThai Developer</author>
@@ -25,6 +25,7 @@
     <preference name="SplashScreenDelay" value="7000" />
     <preference name="SplashReloadOnOrientationChange" value="true" />
     <preference name="AllowInlineMediaPlayback" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="true" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <platform name="android">
@@ -85,13 +86,13 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-            <string>We want your location! Best regards</string>
+            <string>For show route to shop or location from your location on google map, and calculate distance from your locate to destination</string>
         </edit-config>
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you location in apps" />
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="For show route to shop or location from your location on google map, and calculate distance from your locate to destination" />
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
@@ -114,7 +115,7 @@
         <variable name="OKHTTP_VERSION" value="3.+" />
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
+    <plugin name="mx.ferreyra.callnumber" spec="^1.0.1" />
     <engine name="android" spec="7.0.0" />
     <engine name="ios" spec="4.5.4" />
-    <plugin name="mx.ferreyra.callnumber" spec="^1.0.1" />
 </widget>

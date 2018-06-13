@@ -19,7 +19,7 @@
       <button menuClose ion-item *ngFor="let row of categorylist" (click)="opencategory(row.id)" class="contentdark" >
           <img src="{{menuicon[row.slug]}}" height="20" style="float:left;margin-right:10px;" /><span [innerHtml] = "row.name"></span><!-- <ion-badge item-end>{{row.count}}</ion-badge> -->
       </button>
-      <button menuClose ion-item (click)="opensetting()"   class="contentdark" >
+      <button  ion-item (click)="opensetting()"   class="contentdark" >
           <span>{{'setting' | translate}}</span>
         </button>
       

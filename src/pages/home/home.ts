@@ -116,7 +116,7 @@ export class HomePage {
     let url = "";
     switch(link){
       case "webboard":
-      url = 'http://www.yoonthai.com/'+this.db.language+'/topics';
+      url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
       this.inb.create(url,"_blank","location=no");
         // this.navCtrl.push('WebboardPage')
       break;
