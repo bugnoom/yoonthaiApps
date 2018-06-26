@@ -61,7 +61,6 @@
     "jquery": "^3.3.1",
     "lazy-load-images": "^1.0.1",
     "minimist": "^1.2.0",
-    "mx.ferreyra.callnumber": "^1.0.1",
     "ng-lazyload-image": "^3.4.2",
     "ng2-lazyload-image": "^2.4.0",
     "rxjs": "5.5.7",
@@ -102,8 +101,7 @@
       "uk.co.workingedge.phonegap.plugin.launchnavigator": {
         "OKHTTP_VERSION": "3.+",
         "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
-      },
-      "mx.ferreyra.callnumber": {}
+      }
     },
     "platforms": [
       "android",
