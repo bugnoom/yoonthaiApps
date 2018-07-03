@@ -17,14 +17,23 @@
 
 </ion-header>
 
+ <!-- The Modal -->
+ <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
 
+      <img id="myimg" class="imageshow" src="assets/fancybox/fancybox_loading.gif"  />
+    </div>
+  </div>
+  
 <ion-content class="contentdark" #container>
-  <div class="fancybox-overlay"></div>
+ 
  
   <img *ngIf="!detaildata.youtube_url"  class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll"/>
 
-  <!-- <img *ngIf="detaildata.youtube_url"  class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll" (click)="openvideo(detaildata.youtube_url)" /> -->
-  <iframe *ngIf="detaildata.youtube_url"   width="100%"
+  <img *ngIf="detaildata.youtube_url && !is_ios"  class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll" (click)="openvideo(detaildata.youtube_url)" />
+  <iframe *ngIf="detaildata.youtube_url && is_ios"   width="100%"
   height="315"
   [src]="trustedVideoUrl ? trustedVideoUrl : null"
   (load)="trustedVideoUrl ? handleIFrameLoadEvent() : null"

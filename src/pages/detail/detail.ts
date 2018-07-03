@@ -1,6 +1,6 @@
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from  '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { CallNumber } from '@ionic-native/call-number';
@@ -24,11 +24,15 @@ export class DetailPage {
   comments: Array<any> = new Array<any>();
   trustedVideoUrl: SafeResourceUrl;
   scripts : string;
+  is_ios : boolean  = false; // check platform to show video
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage,private sanitizer : DomSanitizer, private inb : InAppBrowser, private callnumber : CallNumber,private domSanitizer: DomSanitizer, private youtube : YoutubeVideoPlayer) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage,private sanitizer : DomSanitizer, private inb : InAppBrowser, private callnumber : CallNumber,private domSanitizer: DomSanitizer, private youtube : YoutubeVideoPlayer, private platform : Platform) {
     this.detaildata = this.navParams.get('detaildata');
     this.feature_img = this.navParams.get('featureImage');
     this.position = this.navParams.get('lat_lng');
+    if(this.platform.is('ios')){
+      this.is_ios = true;
+    }
 
   }
 
@@ -50,7 +54,7 @@ export class DetailPage {
 
     //let newString = this.detaildata.content.rendered.replace(regx," id=\"im\" onClick=\"window.open('$1', '_blank', 'location=yes')\"")
   let newString = this.detaildata.content.rendered.replace(regx," <button id=\"t\" onclick=\"showPhotoView('$1')\">" );
-   
+  
     this.data = {
                   title : this.detaildata.title.rendered,
                   content : this.domSanitizer.bypassSecurityTrustHtml(newString)
@@ -111,7 +115,7 @@ export class DetailPage {
     let id = url.split('/');
     let urlid = id[id.length-1];
     console.log(urlid);
-    this.youtube.openVideo(urlid);
+    this.youtube.openVideo(urlid+'');
   }
 
   addfav(data){

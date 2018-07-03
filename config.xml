@@ -29,7 +29,9 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="YouTubeDataApiKey" value="AIzaSyBPAkr4JsKw4sDUgcds95IC03yy21ZCqPs" />
+    
     <platform name="android">
+        <hook src="platforms/android/copy-gradle-extra.js" type="before_build" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
@@ -108,6 +110,10 @@
     <plugin name="cordova-plugin-firebase" spec="~1.0.5" />
     <plugin name="cordova-plugin-local-notification" spec="~0.9.0-beta.2" />
     <engine name="ios" spec="4.5.4" />
-    <engine name="android" spec="~6.4.0" />
     <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="~4.2.1">
+        <variable name="OKHTTP_VERSION" value="3.+" />
+        <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
+    </plugin>
+    <engine name="android" spec="~6.4.0" />
 </widget>
