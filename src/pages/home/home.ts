@@ -116,21 +116,21 @@ export class HomePage {
     let url = "";
     switch(link){
       case "webboard":
-      url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
-      this.inb.create(url,"_blank","location=no");
-        // this.navCtrl.push('WebboardPage')
+        url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
+        this.inb.create(url,"_blank","location=no");
+     //    this.navCtrl.push('WebboardPage')
       break;
       case "facebook":
-       url = "https://www.facebook.com/youinthai";
-      this.inb.create(url,"_blank","location=no");
+        url = "https://www.facebook.com/youinthai";
+        this.inb.create(url,"_blank","location=no");
       break;
       case "instragram":
-      url = "https://www.instagram.com/yoointhai/"
-      this.inb.create(url,"_blank","location=no");
+        url = "https://www.instagram.com/yoointhai/"
+        this.inb.create(url,"_blank","location=no");
       break;
       case "youtube":
-      url ="https://www.youtube.com/channel/UCnPZS16z_g5SiyupCqiR8ag"
-      this.inb.create(url,"_blank","location=no");
+        url ="https://www.youtube.com/channel/UCnPZS16z_g5SiyupCqiR8ag"
+        this.inb.create(url,"_blank","location=no");
       break;
     }
     

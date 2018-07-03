@@ -1,6 +1,8 @@
+import { Subject } from 'rxjs/Subject';
+import { FcmproviderProvider } from './../providers/fcmprovider/fcmprovider';
 
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, NavController, Events, ActionSheetController } from 'ionic-angular';
+import { Platform, Nav, NavController, Events, ActionSheetController, ToastController, Tab, TapClick } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -12,6 +14,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { I18nSwitcherProvider } from './../providers/i18n-switcher/i18n-switcher';
 import { Subscription } from 'rxjs/Subscription';
+
+import { tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,7 +33,7 @@ export class MyApp {
 
   private i18nSubscription: Subscription;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events, private actionsheet : ActionSheetController) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events, private actionsheet : ActionSheetController,private fcm : FcmproviderProvider, private toastCtrl : ToastController) {
     this.initalApps();
     this.initTranslate();
     this.getcategory(this.db.language);
@@ -80,6 +84,20 @@ export class MyApp {
       this.statusBar.backgroundColorByHexString('#555555');
 
       this.splashScreen.hide();
+
+     /*  //get token add add to
+      this.fcm.getToken();
+
+      this.fcm.listenToNotifications().pipe(
+        tap(msg => {
+          const toast = this.toastCtrl.create({
+            message : msg.body,
+            duration: 3000
+          });
+          toast.present();
+        })
+      ).subscribe()
+     */
 
       this.geolocation.getCurrentPosition().then(
         (resp => {

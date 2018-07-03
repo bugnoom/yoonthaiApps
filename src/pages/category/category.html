@@ -12,18 +12,19 @@
 
 </ion-header>
 
-<ion-content #container class="contentdark" >
-  <ion-card *ngFor="let row of cate_list" class="cardoption"  >
-    <ion-item class="cardheaditem" (click)="opendetail(row,this.feature_image[row.id])">
-      <h2>{{row.title.rendered}}</h2>
-     
-    </ion-item>
-    <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_image[row.id]"  (click)="opendetail(row,this.feature_image[row.id])" [scrollObservable]="container.ionScroll" [offset]="1000" />
-    <ion-card-content>
+<ion-content #container class="contentdark">
+  <ion-card *ngFor="let row of cate_list" class="cardoption">
+    <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_image[row.id]" (click)="opendetail(row,this.feature_image[row.id])"
+      [scrollObservable]="container.ionScroll" [offset]="1000" />
+    <ion-card-content class="cardcontent_gra">
+      <ion-card-title>
+        {{row.title.rendered}}
+      </ion-card-title>
       <p [innerHtml]="row.excerpt.rendered"></p>
     </ion-card-content>
     <ion-item>
-      <p item-left class="textdiff"><ion-icon name="clock"></ion-icon> {{opendatetime(row)}}</p>
+      <p item-left class="textdiff">
+        <ion-icon name="clock"></ion-icon> {{opendatetime(row)}}</p>
       <button ion-button icon-left clear item-end (click)="openmap(row.latlong,row.longtitude);">
         <ion-icon name="navigate"></ion-icon>
         Go!
@@ -31,7 +32,7 @@
     </ion-item>
   </ion-card>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="hasMoreData">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

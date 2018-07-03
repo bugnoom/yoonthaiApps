@@ -9,7 +9,7 @@
   <ion-navbar color="bgcolor">
     <ion-title class="headertitle"><p [innerHtml]="data.title"></p></ion-title>
     <ion-buttons end color="bgcolor">
-      <button ion-button clear icon-only (click)="openweb('webboard')" >
+      <button ion-button clear icon-only (click)="addfav(detaildata)" >
         <ion-icon name="md-heart"></ion-icon>
       </button>
       </ion-buttons>
@@ -19,9 +19,11 @@
 
 
 <ion-content class="contentdark" #container>
+  <div class="fancybox-overlay"></div>
  
-  <img *ngIf="!detaildata.youtube_url"  class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll"
-  />
+  <img *ngIf="!detaildata.youtube_url"  class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll"/>
+
+  <!-- <img *ngIf="detaildata.youtube_url"  class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_img" [scrollObservable]="container.ionScroll" (click)="openvideo(detaildata.youtube_url)" /> -->
   <iframe *ngIf="detaildata.youtube_url"   width="100%"
   height="315"
   [src]="trustedVideoUrl ? trustedVideoUrl : null"
@@ -38,25 +40,25 @@
       </ion-row>
       <ion-card>
         
-      <ion-list class="list-ios">
+      <ion-list >
         <ion-list-header> <ion-icon name="clock"></ion-icon> Hour</ion-list-header>
-        <ion-item class="item-ios">  {{opendatetime(detaildata)}}</ion-item>
+        <ion-item >  {{opendatetime(detaildata)}}</ion-item>
       </ion-list>
-      <ion-list class="list-ios">
+      <ion-list >
         <ion-list-header><ion-icon name="call"></ion-icon> Call</ion-list-header>
-        <ion-item class="item-ios"><button ion-button icon-left clear small item-start (click)="callout(detaildata.tel_number)">
+        <ion-item ><button ion-button icon-left clear small item-start (click)="callout(detaildata.tel_number)">
           {{detaildata.tel_number}}
         </button></ion-item>
       </ion-list>
-      <ion-list class="list-ios">
-        <ion-list-header><ion-icon name="home"></ion-icon>Address</ion-list-header>
-        <ion-item class="item-ios"> 
-          <p>{{detaildata.address}}</p>
+      <ion-list >
+        <ion-list-header><ion-icon name="home"></ion-icon> Address</ion-list-header>
+        <ion-item text-wrap> 
+          {{detaildata.address}}
         </ion-item>
       </ion-list>
-      <ion-list class="list-ios">
-        <ion-list-header><ion-icon name="link"></ion-icon>Home Pages</ion-list-header>
-        <ion-item class="item-ios"> 
+      <ion-list >
+        <ion-list-header><ion-icon name="link"></ion-icon> Home Pages</ion-list-header>
+        <ion-item > 
           <button (click)="openpage(detaildata.facebook_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.facebook_url != ''" ><ion-icon name="logo-facebook"></ion-icon></button>
           <button (click)="openpage(detaildata.instagram_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.instagram_url != ''"><ion-icon name="logo-instagram"></ion-icon></button>
           <button (click)="openpage(detaildata.twitter_url)" ion-button icon-left icon-only clear  *ngIf="detaildata.twitter_url != ''"><ion-icon name="logo-twitter"></ion-icon></button>

@@ -1,3 +1,4 @@
+import { FcmproviderProvider } from './../providers/fcmprovider/fcmprovider';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Globalization } from '@ionic-native/globalization';
 
@@ -16,23 +17,22 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MyApp } from './app.component';
 import { DbProvider } from '../providers/db/db';
 
-import {GoogleMaps} from '@ionic-native/google-maps';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
-import { LaunchNavigator  } from '@ionic-native/launch-navigator';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { I18nSwitcherProvider } from '../providers/i18n-switcher/i18n-switcher';
 
 import { CallNumber } from '@ionic-native/call-number'
 
-import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
+import { Firebase } from '@ionic-native/firebase';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
-
-export function createTranslateLoader(http:HttpClient){
-  return new TranslateHttpLoader(http, './assets/i18n/','.json');
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
-
 
 @NgModule({
   declarations: [
@@ -43,9 +43,9 @@ export function createTranslateLoader(http:HttpClient){
     BrowserModule,
     IonicModule.forRoot(MyApp),
     TranslateModule.forRoot({
-      loader : {
-        provide : TranslateLoader,
-        useFactory : (createTranslateLoader),
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
     }),
@@ -58,7 +58,7 @@ export function createTranslateLoader(http:HttpClient){
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     Geolocation,
     DbProvider,
     GoogleMaps,
@@ -67,8 +67,11 @@ export function createTranslateLoader(http:HttpClient){
     I18nSwitcherProvider,
     InAppBrowser,
     CallNumber,
-    PhotoViewer
-    
+    YoutubeVideoPlayer,
+    Firebase,
+    LocalNotifications,
+    FcmproviderProvider
+
   ]
 })
-export class AppModule {}
+export class AppModule { }

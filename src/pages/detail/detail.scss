@@ -12,8 +12,8 @@ page-detail {
     .list-header{
         margin-bottom:-10px;
     }
-    .list-header-ios{
-        border-bottom:0px;
+    /* .list-header-ios{
+        border-bottom:1px;
         text-transform: none;
         color:#757575;
         font-size:1.4rem;
@@ -22,6 +22,10 @@ page-detail {
 
     .list-ios > .item-block:first-child{
         border-top:0px;
+    } */
+
+    .item .item-block{
+        padding-left:30px;
     }
 
     .alignnone{
