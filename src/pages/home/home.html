@@ -30,6 +30,9 @@
 
 
 <ion-content class="contentdark">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
   <ion-slides class="slidebanner">
     <ion-slide>
       <img src="assets/imgs/{{'banner_img' | translate }}">
@@ -37,7 +40,8 @@
     
   </ion-slides>
 <hr style="border-bottom: 1px inset #555555;" />
-  <ion-row>
+<div *ngIf="isloading" style="height:50px;" ><img src="assets/fancybox/fancybox_loading.gif"></div>
+  <div *ngIf="!isloading">
       <ion-row class="rowheader">
           <ion-col col-6 class="title"><img src="assets/icon/recommend.png" height="20" style="float:left;margin-right:10px;" />{{'recommend' | translate }} </ion-col>
           <ion-col col-6 text-right><button ion-button small color="light" clear (click)="opencategory(132)">{{'viewall' | translate}}</button></ion-col>
@@ -63,9 +67,11 @@
       </ion-card> 
     </ion-col>
   </ion-scroll>
-  </ion-row>
+  </div>
 
-  <ion-row *ngFor="let caterow of category"> 
+<ion-row *ngIf="isloading" ><img src="assets/fancybox/fancybox_loading.gif"></ion-row>
+<span *ngIf="!isloading">
+  <ion-row   *ngFor="let caterow of category" style="z-index:2;"> 
     <ion-row class="rowheader">
         <ion-col col-6 class="title">
           <img src="{{cateicon[caterow.slug]}}" height="20" style="float:left;margin-right:10px;" />
@@ -94,7 +100,7 @@
     </ion-col>
     </ion-scroll>
   </ion-row>
-
+</span> 
   
    
 </ion-content>

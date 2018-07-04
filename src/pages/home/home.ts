@@ -1,10 +1,11 @@
+import { NetworkcheckProvider } from './../../providers/networkcheck/networkcheck';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Globalization } from '@ionic-native/globalization';
 import { I18nSwitcherProvider } from './../../providers/i18n-switcher/i18n-switcher';
 
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
@@ -38,25 +39,41 @@ export class HomePage {
 
   cateicon : any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, private inb : InAppBrowser) {
-    
+  isloading : boolean = true;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, public event : Events,public networkcheck : NetworkcheckProvider) {
+  
   }
 
   ionViewDidLoad() {
+      this.storage.get('mylang').then(
+        (data) => {
+          this.db.language = data;
+          this.load_recomment();
+          this.load_data();
+        },
+        (err) => { }
+      )
+   
+
     /*  this.load_recomment();
      this.load_data(); */
-     this.storage.get('mylang').then(
-      (data) => {
-        this.db.language = data;
-        this.load_recomment();
-        this.load_data();
-      },
-      (err) => { }
-    )
+    
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.ionViewDidLoad();
+      refresher.complete();
+    }, 1000);
   }
 
   opencategory(id) {
-    this.navCtrl.push('CategoryPage', { ids: id });
+    this.navCtrl.push('CategoryPage', { ids: id })
+ 
   }
 
   ionViewDidEnter() {
@@ -69,7 +86,7 @@ export class HomePage {
   }
 
   load_recomment() {
-    this.db.showloading();
+    this.isloading = true;
     this.db.getPostbyCategory(132, this.page, this.db.language).then(
       data => {
         this.data_recomment = data;
@@ -78,7 +95,7 @@ export class HomePage {
           // console.log("Recomment id", this.data_recomment[i].id);
         }
       },
-      err => { console.log('error', err) }
+      err => { console.log('error', err); this.db.hideloading(); }
     )
   }
 
@@ -97,10 +114,16 @@ export class HomePage {
             // console.log('data',alldata[i].data[a]);
           }
         }
-        this.db.hideloading();
+        //this.db.hideloading();
+        this.isloading=false;
+      },
+      error =>{this.isloading = false;//this.db.hideloading();
       }
     )
-
+.catch(
+  error => {this.isloading = false;//this.db.hideloading()
+  }
+)
   }
 
   loadsocial(){
@@ -117,20 +140,23 @@ export class HomePage {
     switch(link){
       case "webboard":
         url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
-        this.inb.create(url,"_blank","location=no");
+       // this.inb.create(url,"_blank","location=no");
      //    this.navCtrl.push('WebboardPage')
+     window.open(url,'_system', 'location=yes');
       break;
       case "facebook":
-        url = "https://www.facebook.com/youinthai";
-        this.inb.create(url,"_blank","location=no");
+        url = "fb://profile/youinthai";//"https://www.facebook.com/youinthai";
+       // this.inb.create(url,"_blank","location=no");
+       window.open(url,'_system','location=yes');
       break;
       case "instragram":
-        url = "https://www.instagram.com/yoointhai/"
-        this.inb.create(url,"_blank","location=no");
+        url = "instagram://user?username=yoonthai";//"https://www.instagram.com/yoointhai/"
+        //this.inb.create(url,"_blank","location=no");
+        window.open(url,'_system','location=yes');
       break;
       case "youtube":
         url ="https://www.youtube.com/channel/UCnPZS16z_g5SiyupCqiR8ag"
-        this.inb.create(url,"_blank","location=no");
+        window.open(url,'_system','location=yes');//this.inb.create(url,"_blank","location=no");
       break;
     }
     

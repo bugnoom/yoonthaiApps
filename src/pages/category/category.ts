@@ -1,6 +1,6 @@
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
@@ -23,15 +23,20 @@ export class CategoryPage {
   page :number = 1;
   hasMoreData: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider,private mylocation : Geolocation,private launchnavigator: LaunchNavigator) {
+  isloading : boolean = true;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider,private mylocation : Geolocation,private launchnavigator: LaunchNavigator, public event : Events) {
     
   }
 
   ionViewDidLoad() {
-    this.watchlocation();
-    this.cate_id = this.navParams.get('ids');
-    this.getcatename();
-    this.showdata();
+   
+      this.watchlocation();
+      this.cate_id = this.navParams.get('ids');
+      this.getcatename();
+      this.showdata();
+    
+   
   }
 
   doInfinite(even) {
@@ -69,7 +74,7 @@ watchlocation(){
 }
 
   showdata(){
-    this.db.showloading();
+   this.isloading = true;
     this.db.getPostbyCategory(this.cate_id,this.page,this.db.language).then(data=>{
       this.cate_list = data;
       console.log('adfad',this.cate_list);
@@ -78,10 +83,12 @@ watchlocation(){
         console.log("cate", this.feature_image[this.cate_list[i].id])
       }
       console.log('postdata',data);
-      this.db.hideloading();
+      this.isloading = false;
+      //this.db.hideloading();
     },err=>{
       console.log('error',err);
-      this.db.hideloading();
+      this.isloading = false;
+     // this.db.hideloading();
     })
   }
 

@@ -30,6 +30,9 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 import { Firebase } from '@ionic-native/firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
+import { Network } from '@ionic-native/network';
+import { NetworkcheckProvider } from '../providers/networkcheck/networkcheck';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -70,7 +73,9 @@ export function createTranslateLoader(http: HttpClient) {
     YoutubeVideoPlayer,
     Firebase,
     LocalNotifications,
-    FcmproviderProvider
+    FcmproviderProvider,
+    NetworkcheckProvider,
+    Network
 
   ]
 })

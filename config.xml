@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.playground.yoonthai" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.playground.yoonthai" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>YoonThai</name>
     <description>Funny Apps for traveler.</description>
     <author email="developper.playground@gmail.com" href="http://www.yoonthai.com/">YoonThai Developer</author>
@@ -29,9 +29,7 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="YouTubeDataApiKey" value="AIzaSyBPAkr4JsKw4sDUgcds95IC03yy21ZCqPs" />
-    
     <platform name="android">
-        <hook src="platforms/android/copy-gradle-extra.js" type="before_build" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
@@ -116,4 +114,5 @@
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
     <engine name="android" spec="~6.4.0" />
+    <plugin name="cordova-plugin-network-information" spec="~2.0.1" />
 </widget>

@@ -1,8 +1,9 @@
+import { NetworkcheckProvider } from './../providers/networkcheck/networkcheck';
 import { Subject } from 'rxjs/Subject';
 import { FcmproviderProvider } from './../providers/fcmprovider/fcmprovider';
 
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, NavController, Events, ActionSheetController, ToastController, Tab, TapClick } from 'ionic-angular';
+import { Platform, Nav, NavController, Events, ActionSheetController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -16,6 +17,7 @@ import { I18nSwitcherProvider } from './../providers/i18n-switcher/i18n-switcher
 import { Subscription } from 'rxjs/Subscription';
 
 import { tap } from 'rxjs/operators';
+import { Network } from '@ionic-native/network';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,8 +35,8 @@ export class MyApp {
 
   private i18nSubscription: Subscription;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events, private actionsheet : ActionSheetController,private fcm : FcmproviderProvider, private toastCtrl : ToastController) {
-    this.initalApps();
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events, private actionsheet : ActionSheetController,private fcm : FcmproviderProvider, private toastCtrl : ToastController,public networkcheck : NetworkcheckProvider, public network: Network) {
+    this.initializeApp();
     this.initTranslate();
     this.getcategory(this.db.language);
     this.checklogin();
@@ -76,7 +78,7 @@ export class MyApp {
     )
   }
 
-  initalApps() {
+  initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -84,6 +86,40 @@ export class MyApp {
       this.statusBar.backgroundColorByHexString('#555555');
 
       this.splashScreen.hide();
+
+      //Check network Status 
+        this.networkcheck.initializeNetworkEvents();
+
+      // Offline event
+      this.event.subscribe('network:offline',()=>{
+       let toast =  this.toastCtrl.create({
+          message : "Sorry!!, Your network is offline please check you connection",
+          position : 'top',
+          showCloseButton: true,
+      closeButtonText: 'Got it!'
+        });
+        toast.onDidDismiss(
+          () => {
+            return false;
+          })
+          toast.present();
+      })
+
+      // Online event
+      this.event.subscribe('network:online',()=>{
+        this.getcategory(this.db.language);
+        let toast =  this.toastCtrl.create({
+          message : "Your network is online ",
+          duration : 3000,
+          position : 'top'
+        });
+        toast.onDidDismiss(
+          () => {
+            return true;
+           
+          })
+          toast.present();
+      })
 
      /*  //get token add add to
       this.fcm.getToken();

@@ -13,6 +13,8 @@
 </ion-header>
 
 <ion-content #container class="contentdark">
+<div *ngIf="isloading" ><img src="assets/fancybox/fancybox_loading.gif"></div>
+<div *ngIf="!isloading">
   <ion-card *ngFor="let row of cate_list" class="cardoption">
     <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_image[row.id]" (click)="opendetail(row,this.feature_image[row.id])"
       [scrollObservable]="container.ionScroll" [offset]="1000" />
@@ -34,5 +36,5 @@
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="hasMoreData">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
+</div> 
 </ion-content>
