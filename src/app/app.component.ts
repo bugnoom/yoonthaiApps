@@ -33,6 +33,8 @@ export class MyApp {
 
   menuicon : any =[];
 
+  switchlanguage : string;
+
   private i18nSubscription: Subscription;
 
   constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private translate: TranslateService, private geolocation: Geolocation, private db: DbProvider, private storage: Storage, private globlization: Globalization, private I18nSwitcherProvider: I18nSwitcherProvider,public event : Events, private actionsheet : ActionSheetController,private fcm : FcmproviderProvider, private toastCtrl : ToastController,public networkcheck : NetworkcheckProvider, public network: Network) {
@@ -189,6 +191,7 @@ export class MyApp {
 
     this.i18nSubscription = this.I18nSwitcherProvider.watch().subscribe((lang: string) => {
       this.translate.use(lang);
+      this.switchlanguage = (lang=="ko" ? "Korean" : "Thai" );
     })
   }
 
@@ -259,6 +262,10 @@ export class MyApp {
 
   openprofile(id){
     this.nav.push('ProfilePage',{profile : id});
+  }
+
+  openabout(){
+    this.nav.push('AboutPage')
   }
 
 }

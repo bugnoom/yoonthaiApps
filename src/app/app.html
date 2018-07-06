@@ -20,7 +20,11 @@
           <img src="{{menuicon[row.slug]}}" height="20" style="float:left;margin-right:10px;" /><span [innerHtml] = "row.name"></span><!-- <ion-badge item-end>{{row.count}}</ion-badge> -->
       </button>
       <button  ion-item (click)="opensetting()"   class="contentdark" >
-          <span>{{'setting' | translate}}</span>
+          <ion-label>{{'txt_lang' | translate}}</ion-label>
+          <ion-note item-end>{{switchlanguage}}</ion-note>
+        </button>
+        <button menuClose  ion-item (click)="openabout()"   class="contentdark" >
+          <span>{{'about' | translate}}</span>
         </button>
       
     </ion-list>
