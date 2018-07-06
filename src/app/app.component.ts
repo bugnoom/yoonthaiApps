@@ -191,7 +191,7 @@ export class MyApp {
 
     this.i18nSubscription = this.I18nSwitcherProvider.watch().subscribe((lang: string) => {
       this.translate.use(lang);
-      this.switchlanguage = (lang=="ko" ? "Korean" : "Thai" );
+      this.switchlanguage = (lang=="ko" ? "한국어" : "ไทย" );
     })
   }
 

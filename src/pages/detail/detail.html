@@ -55,9 +55,12 @@
       </ion-list>
       <ion-list >
         <ion-list-header><ion-icon name="call"></ion-icon> Call</ion-list-header>
-        <ion-item ><button ion-button icon-left clear small item-start (click)="callout(detaildata.tel_number)">
-          {{detaildata.tel_number}}
-        </button></ion-item>
+        <ion-item >
+          <button *ngFor="let itemtel of telnumber"  ion-button icon-left clear small item-start (click)="callout(detaildata.tel_number)">
+          {{itemtel}}
+        </button>
+       
+      </ion-item>
       </ion-list>
       <ion-list >
         <ion-list-header><ion-icon name="home"></ion-icon> Address</ion-list-header>

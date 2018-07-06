@@ -26,6 +26,8 @@ export class DetailPage {
   scripts : string;
   is_ios : boolean  = false; // check platform to show video
 
+  telnumber :any [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage,private sanitizer : DomSanitizer, private inb : InAppBrowser, private callnumber : CallNumber,private domSanitizer: DomSanitizer, private youtube : YoutubeVideoPlayer, private platform : Platform) {
     this.detaildata = this.navParams.get('detaildata');
     this.feature_img = this.navParams.get('featureImage');
@@ -43,6 +45,7 @@ export class DetailPage {
   }
 
   ionViewDidLoad() {
+    this.telnumber = this.detaildata.tel_number.split(',');
     
     console.log('ionViewDidLoad DetailPage',this.detaildata);
     console.log("youtube url",this.detaildata.youtube_url);
