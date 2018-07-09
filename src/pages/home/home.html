@@ -41,14 +41,42 @@
     
   </ion-slides>
 <hr style="border-bottom: 1px inset #555555;" />
-<div *ngIf="isloading" style="height:50px;" ><img src="assets/fancybox/fancybox_loading.gif"></div>
+
+<div *ngIf="isloading" style="height:auto;" >
+  <ion-row class="rowheader">
+    <ion-col col-6 class="title"><img src="assets/icon/recommend.png" height="20" style="float:left;margin-right:10px;" />{{'recommend' | translate }} </ion-col>
+    <ion-col col-6 text-right><button ion-button small color="light" clear (click)="opencategory(132)">{{'viewall' | translate}}</button></ion-col>
+</ion-row>
+<ion-scroll scrollX="true"  class="scrollElement">
+<ion-col col-10 col-md-5 col-lg-5 col-xs-5 *ngFor="let row of [1,2,3,4]" class="coldata" >
+<ion-card #container > 
+  <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="" [scrollObservable]="container.ionScroll" [offset]="1000" [scrollTarget]="container.scrollElement" (click)="opendetail(row,this.feature_image[row.id])" />
+<!--  <img src="{{feature_image.source_url}}" (click)="opendetail(data)" /> -->
+  <ion-item>
+    <span item-left class="textdiff"><ion-spinner name="bubbles"  ></ion-spinner></span>
+    
+  </ion-item>
+  
+  <ion-item>
+    <span item-left class="textdiff"><ion-spinner name="bubbles"  ></ion-spinner> </span>
+    <button ion-button icon-left clear item-end disabled >
+      <ion-icon name="navigate"></ion-icon>
+      Go!
+    </button>
+  </ion-item>
+
+</ion-card> 
+</ion-col>
+</ion-scroll>
+</div>
+
   <div *ngIf="!isloading">
       <ion-row class="rowheader">
           <ion-col col-6 class="title"><img src="assets/icon/recommend.png" height="20" style="float:left;margin-right:10px;" />{{'recommend' | translate }} </ion-col>
           <ion-col col-6 text-right><button ion-button small color="light" clear (click)="opencategory(132)">{{'viewall' | translate}}</button></ion-col>
       </ion-row>
     <ion-scroll scrollX="true"  class="scrollElement">
-    <ion-col col-10 col-md-5 col-lg-5 col-xs-5 *ngFor="let row of data_recomment" class="coldata" >
+    <ion-col col-10 col-md-5 col-lg-5 col-xs-5 *ngFor="let row of data_recomment.data" class="coldata" >
       <ion-card #container > 
         <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="this.feature_image[row.id]" [scrollObservable]="container.ionScroll" [offset]="1000" [scrollTarget]="container.scrollElement" (click)="opendetail(row,this.feature_image[row.id])" />
       <!--  <img src="{{feature_image.source_url}}" (click)="opendetail(data)" /> -->
@@ -70,7 +98,38 @@
   </ion-scroll>
   </div>
 
-<ion-row *ngIf="isloading" ><img src="assets/fancybox/fancybox_loading.gif"></ion-row>
+<div *ngIf="isloading" style="display:block;position:relative;" >
+  <ion-row   *ngFor="let caterow of [1,2,3,4,5]" > 
+    <ion-row class="rowheader">
+        <ion-col col-6 class="title">
+          <ion-spinner name="bubbles"  ></ion-spinner>
+        </ion-col>
+        <ion-col col-6 text-right><button ion-button color="light" small clear ><ion-spinner name="bubbles"  ></ion-spinner></button></ion-col>
+    </ion-row>
+    <ion-scroll scrollX="true" class="scrollElement" >
+    <ion-col col-10 col-md-5 col-lg-5 col-xs-5 *ngFor="let row of [1,2,3,4]" class="coldata" >
+      <ion-card #container1> 
+        <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="" [scrollObservable]="container1.ionScroll" [offset]="5000" [scrollTarget]="container1.scrollElement" (click)="opendetail(row,this.feature_image[row.id])" />
+        <ion-item>
+          <ion-spinner name="bubbles"  ></ion-spinner>
+          
+        </ion-item>
+      
+        <ion-item>
+          <span item-left class="textdiff"><ion-spinner name="bubbles"  ></ion-spinner></span>
+          <button ion-button icon-left clear item-end disabled>
+            <ion-icon name="navigate"></ion-icon>
+            Go!
+          </button>
+        </ion-item>
+      
+      </ion-card> 
+    </ion-col>
+    </ion-scroll>
+  </ion-row>
+</div>
+
+
 <span *ngIf="!isloading">
   <ion-row   *ngFor="let caterow of category" style="z-index:2;"> 
     <ion-row class="rowheader">

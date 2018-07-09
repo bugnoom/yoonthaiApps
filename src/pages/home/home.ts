@@ -42,7 +42,7 @@ export class HomePage {
   isloading : boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, public event : Events,public networkcheck : NetworkcheckProvider) {
-  
+    
   }
 
   ionViewDidLoad() {
@@ -50,11 +50,11 @@ export class HomePage {
         (data) => {
           this.db.language = data;
           this.load_recomment();
-          this.load_data();
+      this.load_data();
         },
         (err) => { }
       )
-   
+    
 
     /*  this.load_recomment();
      this.load_data(); */
@@ -90,9 +90,10 @@ export class HomePage {
     this.db.getPostbyCategory(132, this.page, this.db.language).then(
       data => {
         this.data_recomment = data;
-        for (let i = 0; i < this.data_recomment.length; i++) {
-          this.getimagefeature(this.data_recomment[i].featured_media, this.data_recomment[i].id);
+        for (let i = 0; i < this.data_recomment.data.length; i++) {
+          //this.getimagefeature(this.data_recomment[i].featured_media, this.data_recomment[i].id);
           // console.log("Recomment id", this.data_recomment[i].id);
+          this.feature_image[this.data_recomment.data[i].id] = this.data_recomment.feature_image[i].source_url
         }
       },
       err => { console.log('error', err); this.db.hideloading(); }
@@ -100,7 +101,7 @@ export class HomePage {
   }
 
   load_data() {
-    console.log("data lang", this.db.language)
+    console.log("dataa lang", this.db.language)
     this.db.getdatainhomepage(this.db.language).then(
       alldata => {
         console.log("data cate",alldata);
@@ -110,7 +111,8 @@ export class HomePage {
           console.log('slugname',slugname[0]);
           this.cateicon[this.category[i].slug] = "assets/imgs/"+slugname[0].trim()+".png";
           for (let a = 0; a < this.category[i].data.length; a++) {
-            this.getimagefeature(this.category[i].data[a].featured_media, this.category[i].data[a].id);
+            //this.getimagefeature(this.category[i].data[a].featured_media, this.category[i].data[a].id);
+            this.feature_image[this.category[i].data[a].id] = this.category[i].feature_image[a].source_url
             // console.log('data',alldata[i].data[a]);
           }
         }

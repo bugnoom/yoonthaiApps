@@ -15,13 +15,11 @@
 <ion-content #container class="contentdark">
 <div *ngIf="isloading" ><img src="assets/fancybox/fancybox_loading.gif"></div>
 <div *ngIf="!isloading">
-  <ion-card *ngFor="let row of cate_list" class="cardoption">
+  <ion-card *ngFor="let row of cate_list.data" class="cardoption">
     <img class="featureimage" [defaultImage]="'assets/imgs/no-image.jpg'" [lazyLoad]="feature_image[row.id]" (click)="opendetail(row,this.feature_image[row.id])"
       [scrollObservable]="container.ionScroll" [offset]="1000" />
     <ion-card-content class="cardcontent_gra">
-      <ion-card-title>
-        {{row.title.rendered}}
-      </ion-card-title>
+      <ion-card-title class="card-title-ios" [innerHtml] = "row.title.rendered"></ion-card-title>
       <p [innerHtml]="row.excerpt.rendered"></p>
     </ion-card-content>
     <ion-item>
