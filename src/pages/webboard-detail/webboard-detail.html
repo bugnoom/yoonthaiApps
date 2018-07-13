@@ -6,13 +6,74 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>webboard-detail</ion-title>
+  <ion-navbar color="bgcolor">
+    <ion-title></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="contentdark">
+   
+  <ion-card>
+    <ion-card-content>
+      <h1>{{commentdata.data.post_title}}</h1>
+      <br/>
+      <div [innerHtml]='commentdata.data.post_content'></div>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>By : {{commentdata.author.detail.nickname}}</div>
+        </button>
+      </ion-col>
+
+      <ion-col center text-center>
+          <button ion-button icon-start clear small>
+        <ion-icon name="chatbubbles"></ion-icon> {{commentdata.data.comment_count}}
+        </button>
+      </ion-col>
+    </ion-row>
+  
+ 
+  <!-- <ion-list >
+    <ion-list-header>Comment : </ion-list-header>
+    <ion-spinner name="bubbles" *ngIf="!this.commentdetail"   ></ion-spinner>
+    <ion-item *ngFor="let item of commentdetail" >
+      <ion-avatar item-start>
+        <img src="assets/imgs/Dainut_ad_th.jpg">
+      </ion-avatar>
+      <p>{{item.comment_content}}</p>
+      <ion-note>{{item.comment_author}}</ion-note>
+    </ion-item>
+    
+  </ion-list> -->
+ 
+</ion-card>
+<ion-row>
+  <ion-col>Comment : </ion-col>
+</ion-row>
+<ion-spinner name="bubbles" *ngIf="!this.commentdetail"   ></ion-spinner>
+<ion-card *ngFor="let item of commentdetail" #container>
+    <ion-item>
+      <ion-avatar item-start>
+          <img defaultImage]="'assets/imgs/user-no-image.png'" [lazyLoad]="this.commentuser[item.user_id]" [scrollObservable]="container.ionScroll" [offset]="1000" [scrollTarget]="container.scrollElement">
+      </ion-avatar>
+      <h2>{{item.comment_author}}</h2>
+      <p>{{item.comment_date}} </p>
+    </ion-item>  
+    <ion-card-content padding style="padding-top:16px" [innerHtml]="item.comment_content">
+     
+    </ion-card-content>
+  
+  
+  </ion-card>
 
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+      <ion-title>Footer</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+

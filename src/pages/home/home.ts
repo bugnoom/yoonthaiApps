@@ -141,10 +141,10 @@ export class HomePage {
     let url = "";
     switch(link){
       case "webboard":
-        url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
+     //   url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
        // this.inb.create(url,"_blank","location=no");
-     //    this.navCtrl.push('WebboardPage')
-     window.open(url,'_system', 'location=yes');
+         this.navCtrl.push('WebboardPage')
+     //window.open(url,'_system', 'location=yes');
       break;
       case "facebook":
         url = "fb://profile/youinthai";//"https://www.facebook.com/youinthai";

@@ -5,6 +5,7 @@
     "viewall" : "View All",
     "recommend" : "Recommend",
     "about" : "About",
+    "webboard" : "Webboard",
 
     "login" : "Login",
     "cancel" : "Cancel",
@@ -13,7 +14,7 @@
     "forgot_pass" : "Forgot your password",
     "new_account" : "Create New Account",
 
-    "banner_img" : "Dainut_ad_th.jpg",
+    "banner_img" : "soobind-tint.jpg",
 
     "text_check_login":"You don't have permission to access this page, Please Login"
 

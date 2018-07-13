@@ -5,6 +5,7 @@
     "viewall" : "ดูทั้งหมด",
     "recommend" : "Recommend",
     "about" : "เกี่ยวกับ",
+    "webboard" : "Webboard",
 
     "login" : "Login",
     "cancel" : "Cancel",
@@ -13,7 +14,7 @@
     "forgot_pass" : "Forgot your password",
     "new_account" : "Create New Account",
 
-    "banner_img" : "Dainut_ad_th.jpg",
+    "banner_img" : "soobind-tint.jpg",
 
      "text_check_login":"เฉพาะสมาชิกเท่านั้น กรุณาล็อกอิน"
 }

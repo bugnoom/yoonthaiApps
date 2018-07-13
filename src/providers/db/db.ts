@@ -187,6 +187,17 @@ export class DbProvider {
     });
   }
 
+  getcomment(post_id){
+    let url = this.baseURL+this.language+"/wp-json/wp/v2/comments/posts/"+post_id;
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      },err=>{
+        console.log(err);
+      })
+    })
+  }
+
   //check Login status
   checklogin(){
      this.storage.get('data_login').then(
