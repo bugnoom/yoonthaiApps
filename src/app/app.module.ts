@@ -35,6 +35,7 @@ import { NetworkcheckProvider } from '../providers/networkcheck/networkcheck';
 
 import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 
+import { UserAgent } from '@ionic-native/user-agent';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -79,7 +80,8 @@ export function createTranslateLoader(http: HttpClient) {
     LocalNotifications,
     FcmproviderProvider,
     NetworkcheckProvider,
-    Network
+    Network,
+    UserAgent
 
   ]
 })

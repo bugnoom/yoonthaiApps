@@ -44,7 +44,7 @@ export class WebboardDetailPage {
 
   getuser(id){
     this.db.getuserDetail(id).subscribe(data=>{
-      console.log('user comment',data)
+      console.log('user comment',data,id)
       let userdetail : any = data;
       this.commentuser[id] = userdetail.avatar_urls[48]
     },err=>{console.log('user',err)})

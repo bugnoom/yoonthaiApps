@@ -1,6 +1,7 @@
 import { DbProvider } from './../../providers/db/db';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { UserAgent } from '@ionic-native/user-agent';
 
 /**
  * Generated class for the WebboardReplyPage page.
@@ -22,7 +23,7 @@ export class WebboardReplyPage {
     parent : "",
     comment : ""
   }
-  
+
   topic : any = {
     detail : "",
     author : "",
@@ -31,7 +32,7 @@ export class WebboardReplyPage {
   toggled: boolean = false;
   result_add_comment : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public viewCtrl : ViewController,private alertCtrl : AlertController, private db : DbProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public viewCtrl : ViewController,private alertCtrl : AlertController, private db : DbProvider, private userAgent : UserAgent) {
     this.commenddata = {
       userlogin : this.navParams.get('userlogin'),
       comment : this.navParams.get('webboard'),
@@ -50,6 +51,9 @@ export class WebboardReplyPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WebboardReplyPage',this.commenddata);
+    this.userAgent.get().then(
+      ag => console.log("Agent is :",ag)
+    ).catch((err) => console.log("agent error",err))
   }
 
   handleSelection(event) {
@@ -81,8 +85,8 @@ export class WebboardReplyPage {
         if(this.result_add_comment.code == 200){
          
           let t = this.alertCtrl.create({
-            title: 'Add Topic Success',
-            subTitle: 'Add new topic is successfully',
+            title: 'Add Comment Success',
+            subTitle: 'Add new Comment is successfully',
             buttons: ['OK']
           });
           this.db.hideloading();
