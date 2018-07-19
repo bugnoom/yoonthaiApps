@@ -33,6 +33,9 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Network } from '@ionic-native/network';
 import { NetworkcheckProvider } from '../providers/networkcheck/networkcheck';
 
+import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
+
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -52,7 +55,8 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    EmojiPickerModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

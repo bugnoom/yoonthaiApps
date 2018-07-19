@@ -1,7 +1,7 @@
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { DbProvider } from './../../providers/db/db';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, Events, Navbar} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Events, Navbar, App } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 /**
@@ -22,11 +22,41 @@ export class LoginPage {
   registerCredentials :any = {email : '', password : ''}
   datalogin : any = {}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage, private toast : ToastController, public event : Events, private inb : InAppBrowser) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db : DbProvider, private storage : Storage, private toast : ToastController, public event : Events, private inb : InAppBrowser,private app : App) {
+   
+    this.storage.get('data_login').then(
+      detail => {
+        console.log("data_login_storage ",detail);
+        this.datalogin = detail;
+        if(this.datalogin != null){
+          this.navCtrl.setRoot("ProfilePage",{profile : detail})
+        }else{
+          this.app.getRootNav().getActiveChildNav().select(3);
+        }
+       // this.navCtrl.setRoot("ProfilePage",{profile : detail})
+         
+      },err =>{console.log("Errr",err)})
+   
   }
 
   ionViewDidLoad() {
+
+    this.event.subscribe('user:login',(
+      data=>{ 
+        console.log('data_login_event',data);
+          if(data != ''){
+            this.navCtrl.setRoot("ProfilePage",{profile : data})
+          }else{
+            this.app.getRootNav().getActiveChildNav().select(3);
+          }        
+      }
+      ), err=>{ console.log("nologin",err)}
+    )
+   /*  this.app.getRootNav().getActiveChildNav().select(3); */
+    
     console.log('ionViewDidLoad LoginPage');
+
     this.navBar.backButtonClick = (e:UIEvent)=>{
       // todo something
       this.navCtrl.pop();
@@ -49,7 +79,7 @@ export class LoginPage {
           this.storage.set("data_login",data);
           this.event.publish("user:login",data);
           this.db.hideloading();
-          this.navCtrl.setRoot("HomePage");
+          this.app.getRootNav().getActiveChildNav().select(3);
         }
         
       },

@@ -2,4 +2,8 @@ page-webboard-detail {
     .card-ios .item-ios.item-block .item-inner,.card-md .item-md.item-block .item-inner{
         border-bottom: 0.55px solid #c8c7cc;
     }
+    ion-card img{
+    
+        width:auto !important;
+    }
 }

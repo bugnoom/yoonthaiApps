@@ -17,7 +17,6 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable()
 export class DbProvider {
 
-  userlogedin : boolean = false;
   baseURL: string = "https://www.yoonthai.com/";
   url: string = this.baseURL + "webservices/services.php";//
  /*  baseURL: string = "http://192.168.1.52/yoonthai/";
@@ -29,7 +28,7 @@ export class DbProvider {
  clng : any;
 
  feature_image: any = [];
- logedin :boolean = false;
+ logedin :boolean ;
  
   constructor(public http: HttpClient, private loadingCtrl : LoadingController,private translate: TranslateService, private i18n : I18nSwitcherProvider, private storage : Storage) {
      
@@ -188,7 +187,8 @@ export class DbProvider {
   }
 
   getcomment(post_id){
-    let url = this.baseURL+this.language+"/wp-json/wp/v2/comments/posts/"+post_id;
+    let l = (this.language == null || 'th')? "" : this.language+'/';
+    let url = this.baseURL+l+"wp-json/wp/v2/comments/posts/"+post_id;
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
         resolve(data);
@@ -198,10 +198,44 @@ export class DbProvider {
     })
   }
 
+  addnewcomment(data){
+    let l = (this.language == null || 'th')? "" : this.language + '/';
+    let url = this.baseURL+l+"wp-json/wp/v2/comment/add/";
+    return new Promise(resolve =>{
+      this.http.post(url,data,{headers: this.getheader() }).subscribe(data=>{
+        resolve(data);
+      }, err => {
+        resolve(err);
+        console.log('Add comment reply Error',err);
+      })
+    })
+  }
+
+  webboardTopic(datatopic){
+    let l = (this.language == null || 'th')? "" : this.language+'/';
+    let url = this.baseURL+l+"wp-json/wp/v2/webboard/add";
+    
+    return new Promise(resolve=>{
+      this.http.post(url,datatopic,{ headers: this.getheader() }).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        resolve(err);
+        console.log("Add Topic error",err)
+      })
+    })
+  }
+
   //check Login status
   checklogin(){
      this.storage.get('data_login').then(
-       data => {this.logedin = true;},
+       data => {
+         console.log('db_checklogin',data)
+        if(data != null){
+          this.logedin = true;
+        }else{
+          this.logedin = false;
+        }
+       },
        err => { this.logedin = false;}
      ).catch(
        () => {this.logedin = false}

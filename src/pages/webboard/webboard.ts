@@ -1,15 +1,9 @@
 import { Storage } from '@ionic/storage';
+
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController, NavParams, ActionSheetController, ModalController, App } from 'ionic-angular';
 
-/**
- * Generated class for the WebboardPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -22,13 +16,12 @@ export class WebboardPage {
   row: any = [];
   authorname : any = [];
   hasMoreData: boolean = true;
+  chklogin : any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, public actionsheetCtrl : ActionSheetController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, public actionsheetCtrl : ActionSheetController, public modal : ModalController, public storage : Storage, private app : App) {
   }
 
-  ionViewDidLoad() {
-   // this.db.checklogin();
-  //  console.log("check",this.db.logedin);
+  loadTopic(){
     this.db.showloading();
       this.db.getwebboard(this.page).then(
         data => {
@@ -43,6 +36,15 @@ export class WebboardPage {
         },
         err => { console.log("error Webboard;");this.db.hideloading(); }
       )
+  }
+  ionViewWillEnter(){
+    this.loadTopic();
+    }
+
+  ionViewDidLoad() {
+   // this.db.checklogin();
+  //  console.log("check",this.db.logedin);
+    
   }
 
   doRefresh(refresher) {
@@ -71,7 +73,7 @@ export class WebboardPage {
          for(let i =0; i < rawdata.data.length; i++){
            let count = this.row.data.length;
           this.row.data[count] = rawdata.data[i];
-          this.authorname[rawdata.data[i].ID] = rawdata.author[rawdata.data[i].ID].detail.nickname;
+          this.authorname[rawdata.data[i].ID] = rawdata.author[rawdata.data[i].ID];
          }
          even.complete();    
        },error => {console.log("infinite error",error);}
@@ -80,5 +82,27 @@ export class WebboardPage {
     }, 1000);
   }
 
+  openadd(){
+   // this.navCtrl.push('WebboardAddPage');
+    //console.log("ADD PAGE CLICK")
+    
+
+    this.storage.get('data_login').then(
+      detail => {
+        console.log("data_login_storage ",detail);
+        this.chklogin = detail;
+        if(this.chklogin == null){
+          this.app.getRootNav().getActiveChildNav().select(3); 
+        }else{
+          let newtopic = this.modal.create('WebboardAddPage',{author : this.chklogin.id },{ enableBackdropDismiss: false });
+          newtopic.onDidDismiss(()=>{this.loadTopic()});
+          newtopic.present();
+        }
+       // this.navCtrl.setRoot("ProfilePage",{profile : detail})
+         
+      },err =>{console.log("Errr",err)})
+
+   
+  }
 
 }

@@ -5,7 +5,7 @@ import { I18nSwitcherProvider } from './../../providers/i18n-switcher/i18n-switc
 
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, App } from 'ionic-angular';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
@@ -41,7 +41,7 @@ export class HomePage {
 
   isloading : boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, public event : Events,public networkcheck : NetworkcheckProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, public event : Events,public networkcheck : NetworkcheckProvider, private app : App) {
     
   }
 
@@ -143,7 +143,8 @@ export class HomePage {
       case "webboard":
      //   url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
        // this.inb.create(url,"_blank","location=no");
-         this.navCtrl.push('WebboardPage')
+        // this.navCtrl.push('WebboardPage')
+         this.app.getRootNav().getActiveChildNav().select(1);
      //window.open(url,'_system', 'location=yes');
       break;
       case "facebook":

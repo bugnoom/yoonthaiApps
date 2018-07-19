@@ -9,8 +9,8 @@
   <ion-navbar color="bgcolor">
     <ion-title>{{'webboard' | translate}}</ion-title>
     <ion-buttons end color="bgcolor">
-      <button ion-button clear icon-only  >
-        <ion-icon name="add"></ion-icon>
+      <button ion-button clear icon-only (click)="openadd()"  >
+        <ion-icon name="add" ></ion-icon>{{ 'newtopic' | translate }}
       </button>
       </ion-buttons>
   </ion-navbar>

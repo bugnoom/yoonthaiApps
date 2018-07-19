@@ -24,8 +24,6 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    
-   
     this.avatar = this.userdetail.avatar_urls[96];
   }
 
@@ -39,13 +37,14 @@ export class ProfilePage {
     this.event.publish("user:login",'');
     this.logedin = false;
     this.db.logedin = false;
-    this.navCtrl.setRoot('HomePage');
+    this.navCtrl.setRoot('TabsPage');
+    
   }
 
   switch(lang: string) {
     this.I18nSwitcherProvider.switchLang(lang);
     this.db.language = lang;
-    this.navCtrl.setRoot('HomePage');
+    this.navCtrl.setRoot('TabsPage');
     this.storage.set('mylang',lang);
   }
 

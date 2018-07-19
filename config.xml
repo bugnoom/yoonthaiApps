@@ -115,4 +115,5 @@
     </plugin>
     <engine name="android" spec="~6.4.0" />
     <plugin name="cordova-plugin-network-information" spec="~2.0.1" />
+    <plugin name="im.ltdev.cordova.UserAgent" spec="~1.0.1" />
 </widget>
