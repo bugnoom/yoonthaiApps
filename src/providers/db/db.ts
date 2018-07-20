@@ -242,6 +242,18 @@ export class DbProvider {
      )
   }
 
+  //get Product list
+  getallproduct(page){
+    let url = this.url+'?action=listproducts&page='+page+'&lang='+this.language;
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        console.log(err);
+      });
+    });
+  }
+
   // REF : https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/27943#27943
   getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     var R = 6371; // Radius of the earth in km

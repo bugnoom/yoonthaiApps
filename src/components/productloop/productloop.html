@@ -1,0 +1,22 @@
+
+<ion-card>
+    <img [src]="data[0].images[0].src">
+    <ion-card-content >
+        <h2>{{data[0].name}}</h2>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="cash" color="danger"></ion-icon>
+          <div [innerHTML]="data[0].price_html"> </div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-start clear small (click)="openproductDetail(data[0].permalink)">
+          <ion-icon name="text"></ion-icon>
+          <div>Detail</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  
+  </ion-card>

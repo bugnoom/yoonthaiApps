@@ -37,13 +37,15 @@ import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 
 import { UserAgent } from '@ionic-native/user-agent';
 
+
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
   ],
   imports: [
     HttpClientModule,
@@ -81,7 +83,8 @@ export function createTranslateLoader(http: HttpClient) {
     FcmproviderProvider,
     NetworkcheckProvider,
     Network,
-    UserAgent
+    UserAgent,
+    
 
   ]
 })

@@ -1,10 +1,12 @@
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { IonicModule } from 'ionic-angular';
 import { NgModule } from '@angular/core';
-import { PostlistComponent } from './postlist/postlist';
+
+import { ProductloopComponent } from './productloop/productloop';
+
 @NgModule({
-	declarations: [PostlistComponent],
-	imports: [IonicModule,LazyLoadImageModule],
-	exports: [PostlistComponent]
+	declarations: [ProductloopComponent],
+	imports: [IonicModule, LazyLoadImageModule],
+	exports: [ProductloopComponent]
 })
 export class ComponentsModule {}
