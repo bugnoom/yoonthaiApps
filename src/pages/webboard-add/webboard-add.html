@@ -22,12 +22,12 @@
   <ion-item>
     <textarea #myInput id="myInput" rows="10" placeholder="Topic Detail" maxLength="500" (keyup)="resize()" [(ngModel)]="topic.detail"></textarea>
   </ion-item>
-  <ion-row align-items-end>
+  <!-- <ion-row align-items-end>
    
   <button class="emojicon" ion-button outline icon-only color="light" (click)="toggled = !toggled" [(emojiPickerIf)]="toggled" [emojiPickerDirection] ="'right'" (emojiPickerSelect) = "handleSelection($event)">😄
     </button>
   
-</ion-row>
+</ion-row> -->
   <button ion-button full (click)="addnew()" color="secondary">Create</button>
   <button ion-button full (click)="dismiss()">Cancel</button>
 

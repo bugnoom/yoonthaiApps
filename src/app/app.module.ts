@@ -33,7 +33,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Network } from '@ionic-native/network';
 import { NetworkcheckProvider } from '../providers/networkcheck/networkcheck';
 
-import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
+//import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 
 import { UserAgent } from '@ionic-native/user-agent';
 
@@ -59,7 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     IonicStorageModule.forRoot(),
-    EmojiPickerModule.forRoot(),
+   // EmojiPickerModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

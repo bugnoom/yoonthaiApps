@@ -1,4 +1,4 @@
-import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
+//import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
@@ -11,7 +11,7 @@ import { WebboardAddPage } from './webboard-add';
   imports: [
     IonicPageModule.forChild(WebboardAddPage),
     TranslateModule.forChild(),
-    EmojiPickerModule
+   // EmojiPickerModule
   ],
 })
 export class WebboardAddPageModule {}
