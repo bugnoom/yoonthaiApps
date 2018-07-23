@@ -17,6 +17,8 @@
 
     "banner_img" : "soobind-tint.jpg",
 
-    "text_check_login":"You don't have permission to access this page, Please Login"
+    "text_check_login":"You don't have permission to access this page, Please Login",
+
+    "buynow" : "Buy Now!"
 
 }

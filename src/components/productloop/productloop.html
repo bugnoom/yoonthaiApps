@@ -5,6 +5,10 @@
         <h2>{{data[0].name}}</h2>
     </ion-card-content>
     <ion-row>
+        <ion-col><button ion-button full color="light" [innerHTML]="data[0].price_html"></button></ion-col>
+        <ion-col><button ion-button full  (click)="openproductDetail(data[0].permalink)"><ion-icon name="text"></ion-icon>&nbsp; Detail</button></ion-col>
+      </ion-row>
+    <!-- <ion-row>
       <ion-col>
         <button ion-button icon-start clear small>
           <ion-icon name="cash" color="danger"></ion-icon>
@@ -17,6 +21,6 @@
           <div>Detail</div>
         </button>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   
   </ion-card>

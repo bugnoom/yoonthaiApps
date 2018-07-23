@@ -6,13 +6,31 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>productdetail</ion-title>
+  <ion-navbar color="bgcolor">
+    <ion-title>{{productdetail.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="contentdark">
+  <ion-card>
+    <ion-card-content>
+        <div [innerHTML]="detail.description"></div>
+    </ion-card-content>
+  </ion-card>
 
+ <!--  <ion-fab top right edge>
+      <button ion-fab color="primary" mini><ion-icon name="cart"></ion-icon>1</button>
+    </ion-fab> -->
 </ion-content>
+<ion-footer>
+    <ion-row>
+      <ion-col><button ion-button full color="light" [innerHTML]="detail.price"></button></ion-col>
+      <ion-col><button ion-button full color="danger" (click)="buynow(productdetail)"><ion-icon name="cart"></ion-icon>&nbsp;{{'buynow' | translate}}</button></ion-col>
+    </ion-row>
+      
+          
+        
+  
+  </ion-footer>

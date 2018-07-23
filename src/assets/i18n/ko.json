@@ -17,5 +17,7 @@
 
     "banner_img" : "soobind-tint.jpg",
 
-     "text_check_login":"You don't have permission to access this page, Please Login KO"
+     "text_check_login":"You don't have permission to access this page, Please Login KO",
+
+     "buynow" : "사다 !"
 }

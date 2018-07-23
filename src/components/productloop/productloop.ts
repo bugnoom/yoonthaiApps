@@ -1,3 +1,4 @@
+import { NavController, NavParams } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Component,Input } from '@angular/core';
 
@@ -11,7 +12,7 @@ export class ProductloopComponent {
   text: string;
   @Input('data') data: any;
 
-  constructor(private inb : InAppBrowser) {
+  constructor(private inb : InAppBrowser, public navCtrl : NavController, public navParams : NavParams) {
     console.log('Hello ProductloopComponent Component');
     
     this.text = 'Hello World';
@@ -22,6 +23,8 @@ export class ProductloopComponent {
     console.log("image src", this.data[0].images[0].src)
   }
   openproductDetail(url){
-    this.inb.create(url);
+   // this.inb.create(url);
+   this.navCtrl.push('ProductdetailPage',{data : this.data[0]})
+
   }
 }

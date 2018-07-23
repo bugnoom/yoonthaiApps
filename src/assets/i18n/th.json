@@ -17,5 +17,7 @@
 
     "banner_img" : "soobind-tint.jpg",
 
-     "text_check_login":"เฉพาะสมาชิกเท่านั้น กรุณาล็อกอิน"
+     "text_check_login":"เฉพาะสมาชิกเท่านั้น กรุณาล็อกอิน",
+
+     "buynow" : "สั่งซื้อ!"
 }
