@@ -18,9 +18,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class DbProvider {
 
   baseURL: string = "https://www.yoonthai.com/";
-  url: string = this.baseURL + "webservices/services.php";//
- /*  baseURL: string = "http://192.168.1.52/yoonthai/";
-  url : string = this.baseURL + "mobileservices/services.php"; */
+  url: string = this.baseURL + "webservices/services.php";
+ // baseURL: string = "http://192.168.1.52/yoonthai/";
+//  url : string = this.baseURL + "mobileservices/services.php";
  language: string;
  loading: any
 
@@ -57,8 +57,7 @@ export class DbProvider {
   }
 
   getdatainhomepage(lang){
-    let l = 'ko';
-    var url = this.url+"?action=getPostFirstPage&l="+l+"&language="+lang;
+    var url = this.url+"?action=getPostFirstPageNew&language="+lang;
     console.log("is url is ",url);
     return new Promise(resolve =>{
       this.http.get(url).subscribe(data=>{
@@ -87,6 +86,21 @@ export class DbProvider {
       this.http.get(url).subscribe(data=>{
         resolve(data);
       }, err =>{
+        console.log(err);
+      });
+    });
+  }
+
+  getWPPostbyCategory(cate_id,per_page,lang){
+    if(cate_id == 'undefined'){ return; }
+    let l = (lang == "th")? "" : ""+lang+"/";
+   var url = this.baseURL+l+"wp-json/wp/v2/posts?categories="+cate_id+"&per_page="+per_page;
+    //var url = this.url + "?action=getmedia&id="+id;
+    return new Promise(resolve =>{
+      this.http.get(url).subscribe(data=>{
+        resolve(data);
+      }, err =>{
+        resolve()
         console.log(err);
       });
     });

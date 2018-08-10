@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'show_variation_title'|translate}}</ion-title>
+    <ion-buttons right>
+      <button class="button" ion-button (click)="dismis()" small>Close</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card *ngFor="let row of product" padding>
+    <h2>
+      {{row.name}}
+    </h2>
+    <ion-card-content>
+      <img src="{{row.images[0].src}}" />
+    </ion-card-content>
+    <ion-row no-padding text-center>
+      <button ion-button full  (click)="addtocart(row)">
+        <ion-icon name='cart'></ion-icon>
+        Add to Cart
+      </button>
+
+    </ion-row>
+  </ion-card>
+</ion-content>

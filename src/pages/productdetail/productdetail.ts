@@ -32,7 +32,8 @@ export class ProductdetailPage {
   }
 
   buynow(data){
-    this.inb.create(data.permalink,"_blank","location=no")
+    this.inb.create(data.permalink,"_blank","location=no");
+    
   }
 
 }

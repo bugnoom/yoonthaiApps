@@ -1,5 +1,4 @@
 import { NetworkcheckProvider } from './../../providers/networkcheck/networkcheck';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Globalization } from '@ionic-native/globalization';
 import { I18nSwitcherProvider } from './../../providers/i18n-switcher/i18n-switcher';
 
@@ -10,12 +9,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
 
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -27,7 +21,8 @@ export class HomePage {
   data: any = [];
   data_recomment: any = [];
   feature_image: any = [];
-  category: any = [];
+  category: any = { alldata: "" };
+  post_data: any = Array();
   curlat: any = 0;
   curlng: any = 0;
   diff: string = '0';
@@ -35,30 +30,29 @@ export class HomePage {
   page: number = 1;
 
   mylang: string;
-  sociallink : any = [];
+  sociallink: any = [];
 
-  cateicon : any = [];
+  cateicon: any = [];
 
-  isloading : boolean = true;
+  isloading: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, public event : Events,public networkcheck : NetworkcheckProvider, private app : App) {
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbProvider, private mylocation: Geolocation, private launchnavigator: LaunchNavigator, private I18nSwitcherProvider: I18nSwitcherProvider, private globalization: Globalization, private storage: Storage, public event: Events, public networkcheck: NetworkcheckProvider, private app: App) {
+    this.storage.get('mylang').then(
+      (data) => {
+        this.db.language = data;
+        this.load_recomment();
+        //this.load_data();
+        this.testload();
+      },
+      (err) => { console.log("error on constructore get lang"+err) }
+    )
   }
 
   ionViewDidLoad() {
-      this.storage.get('mylang').then(
-        (data) => {
-          this.db.language = data;
-          this.load_recomment();
-      this.load_data();
-        },
-        (err) => { }
-      )
-    
 
     /*  this.load_recomment();
      this.load_data(); */
-    
+
   }
 
   doRefresh(refresher) {
@@ -66,14 +60,16 @@ export class HomePage {
 
     setTimeout(() => {
       console.log('Async operation has ended');
-      this.ionViewDidLoad();
+      //this.ionViewDidLoad();
+      this.load_recomment();
+      this.testload();
       refresher.complete();
     }, 1000);
   }
 
   opencategory(id) {
     this.navCtrl.push('CategoryPage', { ids: id })
- 
+
   }
 
   ionViewDidEnter() {
@@ -87,29 +83,80 @@ export class HomePage {
 
   load_recomment() {
     this.isloading = true;
-    this.db.getPostbyCategory(132, this.page, this.db.language).then(
+    this.db.getWPPostbyCategory(132, 5, this.db.language).then(
       data => {
         this.data_recomment = data;
-        for (let i = 0; i < this.data_recomment.data.length; i++) {
+        console.log("data_recomment",this.data_recomment);
+        for (let i = 0; i < this.data_recomment.length; i++) {
           //this.getimagefeature(this.data_recomment[i].featured_media, this.data_recomment[i].id);
-          // console.log("Recomment id", this.data_recomment[i].id);
-          this.feature_image[this.data_recomment.data[i].id] = this.data_recomment.feature_image[i].source_url
+           console.log("Recomment id "+i, this.data_recomment[i]);
+           this.db.getmedia_picture(this.data_recomment[i].featured_media).then(
+             feaimg =>{
+                let fimg : any = feaimg;
+                this.feature_image[this.data_recomment[i].id] = fimg.source_url
+             },
+             feaimg_err => {console.log("Error recomment",feaimg_err)}
+           )
+          
         }
       },
       err => { console.log('error', err); this.db.hideloading(); }
     )
   }
 
+  testload() {
+    //get category list from mobile service file
+    this.db.getdatainhomepage(this.db.language).then(
+      alldata => {
+        this.category.alldata = alldata;
+        for (let i = 0; i < this.category.alldata.length; i++) {
+          let slugname = this.category.alldata[i].slug.split('-');
+          console.log('slugname', slugname[0]);
+          this.cateicon[this.category.alldata[i].slug] = "assets/imgs/" + slugname[0].trim() + ".png";
+
+          //get post_data by category id
+          this.db.getWPPostbyCategory(this.category.alldata[i].id, 5, this.db.language).then(
+            post_data => {
+              this.post_data[this.category.alldata[i].id] = post_data;
+              console.log('post data ' + this.category.alldata[i].id, this.post_data[this.category.alldata[i].id])
+              //loop for get media feature image
+              for (let f = 0; f < this.post_data[this.category.alldata[i].id].length; f++) {
+                //get media data
+                this.db.getmedia_picture(this.post_data[this.category.alldata[i].id][f].featured_media).then(
+                  feature => {
+                    let f_image : any = feature;
+                    this.feature_image[this.post_data[this.category.alldata[i].id][f].id] = f_image.source_url
+                  },
+                  feature_err => { console.log("err fea", feature_err) }
+                )
+              }
+              
+            }
+          )
+          if(i >= this.category.alldata.length-1){
+            this.isloading = false;
+          }
+
+        }
+        
+      },
+      error => { this.isloading = false; }
+    )
+
+
+    //get media from media post array by post id
+  }
+
   load_data() {
     console.log("dataa lang", this.db.language)
     this.db.getdatainhomepage(this.db.language).then(
       alldata => {
-        console.log("data cate",alldata);
+        console.log("data cate", alldata);
         this.category = alldata;
         for (let i = 0; i < this.category.length; i++) {
           let slugname = this.category[i].slug.split('-');
-          console.log('slugname',slugname[0]);
-          this.cateicon[this.category[i].slug] = "assets/imgs/"+slugname[0].trim()+".png";
+          console.log('slugname', slugname[0]);
+          this.cateicon[this.category[i].slug] = "assets/imgs/" + slugname[0].trim() + ".png";
           for (let a = 0; a < this.category[i].data.length; a++) {
             //this.getimagefeature(this.category[i].data[a].featured_media, this.category[i].data[a].id);
             this.feature_image[this.category[i].data[a].id] = this.category[i].feature_image[a].source_url
@@ -117,52 +164,54 @@ export class HomePage {
           }
         }
         //this.db.hideloading();
-        this.isloading=false;
+        this.isloading = false;
       },
-      error =>{this.isloading = false;//this.db.hideloading();
+      error => {
+      this.isloading = false;//this.db.hideloading();
       }
     )
-.catch(
-  error => {this.isloading = false;//this.db.hideloading()
-  }
-)
+      .catch(
+        error => {
+        this.isloading = false;//this.db.hideloading()
+        }
+      )
   }
 
-  loadsocial(){
+  loadsocial() {
     this.db.getsocialLink(this.db.language).then(
-      socialdata =>{
+      socialdata => {
         this.sociallink = socialdata
       }
     )
   }
 
 
-  openweb(link){
+  openweb(link) {
     let url = "";
-    switch(link){
+    switch (link) {
       case "webboard":
-     //   url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
-       // this.inb.create(url,"_blank","location=no");
+        //   url = 'https://www.yoonthai.com/'+this.db.language+'/topics';
+        // this.inb.create(url,"_blank","location=no");
         // this.navCtrl.push('WebboardPage')
-         this.app.getRootNav().getActiveChildNav().select(1);
-     //window.open(url,'_system', 'location=yes');
-      break;
+        this.app.getRootNav().getActiveChildNav().select(1);
+        //window.open(url,'_system', 'location=yes');
+        break;
       case "facebook":
         url = "fb://profile/youinthai";//"https://www.facebook.com/youinthai";
-       // this.inb.create(url,"_blank","location=no");
-       window.open(url,'_system','location=yes');
-      break;
+        // this.inb.create(url,"_blank","location=no");
+        window.open(url, '_system', 'location=yes');
+        break;
       case "instragram":
         url = "instagram://user?username=yoonthai";//"https://www.instagram.com/yoointhai/"
         //this.inb.create(url,"_blank","location=no");
-        window.open(url,'_system','location=yes');
-      break;
+        window.open(url, '_system', 'location=yes');
+        break;
       case "youtube":
-        url ="https://www.youtube.com/channel/UCnPZS16z_g5SiyupCqiR8ag"
-        window.open(url,'_system','location=yes');//this.inb.create(url,"_blank","location=no");
-      break;
+        url = "https://www.youtube.com/channel/UCnPZS16z_g5SiyupCqiR8ag"
+        window.open(url, '_system', 'location=yes');//this.inb.create(url,"_blank","location=no");
+        break;
     }
-    
+
   }
 
   openmap(destlat, destlng) {
