@@ -1,3 +1,5 @@
+import { DbProvider } from './../../providers/db/db';
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -15,11 +17,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ShopCartPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  product_data : any 
+  items : any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage : Storage, private db : DbProvider) {
+    this.storage.get('cart').then(
+      data => {this.items = data},
+      err => {this.items = []}
+    )
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShopCartPage');
+  }
+
+  sumproduct_price(){
+
+  }
+
+  removethis(){
+
   }
 
 }

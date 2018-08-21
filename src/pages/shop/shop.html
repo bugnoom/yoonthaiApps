@@ -29,7 +29,7 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll> -->
    
-      <!-- <ion-fab top right edge>
-          <button ion-fab color="primary" mini><ion-icon name="cart"></ion-icon>1</button>
-        </ion-fab> -->
+      <ion-fab top right edge>
+          <button ion-fab color="primary" mini (click)="opencart()" ><ion-icon name="cart"></ion-icon>{{cart}}</button>
+        </ion-fab>
 </ion-content>

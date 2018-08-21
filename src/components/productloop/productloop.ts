@@ -13,9 +13,7 @@ export class ProductloopComponent {
   @Input('data') data: any;
 
   constructor(private inb : InAppBrowser, public navCtrl : NavController, public navParams : NavParams) {
-    console.log('Hello ProductloopComponent Component');
     
-    this.text = 'Hello World';
   }
 
   ngOnInit(): void {

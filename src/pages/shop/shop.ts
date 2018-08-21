@@ -1,6 +1,7 @@
+import { Storage } from '@ionic/storage';
 import { DbProvider } from './../../providers/db/db';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 
 
 /**
@@ -22,8 +23,10 @@ export class ShopPage {
   hasMoreData:boolean = false;
   page : number = 1;
   key : any;
+  cart : any = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public db :DbProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public db :DbProvider, public event : Events, private storage : Storage) {
+    this.db.getcart().then(data =>{this.cart = data},err=>{this.cart = 0;})
   }
 
   ionViewDidLoad() {
@@ -31,6 +34,12 @@ export class ShopPage {
     this.getallproduct();
   }
 
+  ionViewDidEnter(){
+   this.db.getcart().then(data =>{this.cart = data},err=>{this.cart = 0;})
+   console.log("get cart", this.cart);
+  }
+
+  
   doInfinite(event){
     this.page = this.page + 1;
     setTimeout(() => {
@@ -64,6 +73,10 @@ export class ShopPage {
         this.showdata(); 
       }
     )
+  }
+
+  opencart(){
+    this.navCtrl.push('ShopCartPage')
   }
 
 }

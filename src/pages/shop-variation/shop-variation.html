@@ -11,15 +11,15 @@
 
 <ion-content padding>
 
-  <ion-card *ngFor="let row of product" padding>
+  <ion-card  padding *ngFor="let item of product_variation" >
     <h2>
-      {{row.name}}
+     {{item.name}}
     </h2>
     <ion-card-content>
-      <img src="{{row.images[0].src}}" />
+      <img src="{{item.images[0].src}}" />
     </ion-card-content>
     <ion-row no-padding text-center>
-      <button ion-button full  (click)="addtocart(row)">
+      <button ion-button full (click)="addtocart(item.id)" >
         <ion-icon name='cart'></ion-icon>
         Add to Cart
       </button>
